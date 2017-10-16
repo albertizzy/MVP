@@ -67,6 +67,13 @@ public class GalleryRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                     mOnItemClickLitener.onItemClick(v, holder.getLayoutPosition());
                 }
             });
+            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mOnItemClickLitener.onItemLongClick(v, holder.getLayoutPosition());
+                    return false;
+                }
+            });
         }
     }
 

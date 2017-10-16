@@ -74,7 +74,8 @@ public class ShareFragment extends Fragment implements ShareView {
 
             @Override
             public void onItemLongClick(View view, int position) {
-
+                mData.remove(position);
+                mAdapter.notifyItemRemoved(position);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
