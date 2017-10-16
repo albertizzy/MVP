@@ -74,7 +74,8 @@ public class SendFragment extends Fragment implements SendView {
 
             @Override
             public void onItemLongClick(View view, int position) {
-
+                mData.remove(position);
+                mAdapter.notifyItemRemoved(position);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
