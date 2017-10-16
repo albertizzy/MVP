@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         mMainPresenter = new MainPresenterImpl(this);
+        navigationView.setCheckedItem(R.id.nav_camera);
         switch2Camera(R.id.nav_camera);
     }
 
