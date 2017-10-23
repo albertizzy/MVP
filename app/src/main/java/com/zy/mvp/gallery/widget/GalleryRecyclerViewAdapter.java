@@ -120,7 +120,7 @@ public class GalleryRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     public interface OnItemClickLitener {
         void onItemClick(View view, int position);
 
-        void onItemLongClick(View view, int position);
+//        void onItemLongClick(View view, int position);
     }
 
     private OnItemClickLitener mOnItemClickLitener;

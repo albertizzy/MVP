@@ -74,11 +74,11 @@ public class GalleryFragment extends Fragment implements GalleryView {
                 Snackbar.make(view, position + " Gallery", Snackbar.LENGTH_SHORT).show();
             }
 
-            @Override
-            public void onItemLongClick(View view, int position) {
-                mData.remove(position);
-                mAdapter.notifyItemRemoved(position);
-            }
+//            @Override
+//            public void onItemLongClick(View view, int position) {
+//                mData.remove(position);
+//                mAdapter.notifyItemRemoved(position);
+//            }
         });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(mOnScrollListener);

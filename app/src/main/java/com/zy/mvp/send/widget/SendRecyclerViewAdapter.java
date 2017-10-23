@@ -8,10 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zy.mvp.R;
+import com.zy.mvp.utils.touchhelper.ItemTouchHelperAdapter;
 
 import java.util.List;
 
-public class SendRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SendRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
     private List<String> mData;
     private final Context context;
     private static final int TYPE_ITEM = 0;
@@ -67,13 +68,13 @@ public class SendRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mOnItemClickLitener.onItemClick(v, holder.getLayoutPosition());
                 }
             });
-            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    mOnItemClickLitener.onItemLongClick(v, holder.getLayoutPosition());
-                    return false;
-                }
-            });
+//            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    mOnItemClickLitener.onItemLongClick(v, holder.getLayoutPosition());
+//                    return false;
+//                }
+//            });
         }
     }
 
@@ -119,12 +120,24 @@ public class SendRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     public interface OnItemClickLitener {
         void onItemClick(View view, int position);
 
-        void onItemLongClick(View view, int position);
+//        void onItemLongClick(View view, int position);
     }
 
     private OnItemClickLitener mOnItemClickLitener;
 
     public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
+    }
+
+//    @Override
+//    public void onItemMove(int fromPosition, int toPosition) {
+//        Collections.swap(mData, fromPosition, toPosition);
+//        notifyItemMoved(fromPosition, toPosition);
+//    }
+
+    @Override
+    public void onItemDissmiss(int position) {
+        mData.remove(position);
+        notifyItemRemoved(position);
     }
 }
