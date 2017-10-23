@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.zy.mvp.gallery.presenter.GalleryPresenter;
 import com.zy.mvp.gallery.presenter.GalleryPresenterImpl;
 import com.zy.mvp.gallery.view.GalleryView;
 import com.zy.mvp.utils.DividerItemDecoration;
+import com.zy.mvp.utils.touchhelper.SimpleItemTouchHelperCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +83,12 @@ public class GalleryFragment extends Fragment implements GalleryView {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(mOnScrollListener);
         mOnRefreshListener.onRefresh();
+        //先实例化Callback
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
+        //用Callback构造ItemtouchHelper
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        //调用ItemTouchHelper的attachToRecyclerView方法建立联系
+        touchHelper.attachToRecyclerView(mRecyclerView);
         return view;
     }
 
