@@ -147,20 +147,27 @@ public class SendFragment extends Fragment implements SendView {
         if (dataList == null || dataList.isEmpty()) {
             mAdapter.isShowFooter(false);
         } else {
+            //如果数据量小于分页条数了,说明没有数据,则隐藏footer布局
+            if (dataList.size() < PAGE_SIZE) {
+                mAdapter.isShowFooter(false);
+            }
             if (mData == null) {
                 mData = new ArrayList<>();
             }
             mData.addAll(dataList);
-        }
-        if (pageIndex == 1) {
             mAdapter.setmData(mData);
-            if (mData == null || mData.size() < PAGE_SIZE) {
-                mAdapter.isShowFooter(false);
-            }
-        } else {
             mAdapter.notifyDataSetChanged();
+            pageIndex++;
         }
-        pageIndex++;
+//        if (pageIndex == 1) {
+//            mAdapter.setmData(mData);
+//            if (mData == null || mData.size() < PAGE_SIZE) {
+//                mAdapter.isShowFooter(false);
+//            }
+//        } else {
+//            mAdapter.notifyDataSetChanged();
+//        }
+//        pageIndex++;
     }
 
     @Override
