@@ -33,15 +33,27 @@ public class CameraPresenterImpl implements CameraPresenter {
         if (page == 1) {
             mListView.showProgress();
         }
-        List<String> list = new ArrayList<>();
+        final List<String> list = new ArrayList<>();
         for (int i = 0; i < CameraFragment.PAGE_SIZE; i++) {
             list.add("item " + (i + 1));
         }
-        success(list);
+//FIXME Rxjava
+//        success(list);
+        Observable<List<String>> observable = Observable.create(new ObservableOnSubscribe<List<String>>() {
+            @Override
+            public void subscribe(ObservableEmitter<List<String>> emitter) throws Exception {
+                Log.e("sleep", "start");
+                Thread.sleep(1000);//FIXME Rxjava模拟延迟加载，正式可删
+                Log.e("sleep", "end");
+                emitter.onNext(list);
+                emitter.onComplete();
+            }
+        });
+        success(observable);
     }
 
     private void success(final List<String> list) {
-//TODO 正常加载
+//TODO 模拟延迟加载
 //        handler.post(new Runnable() {
 //            @Override
 //            public void run() {
@@ -49,29 +61,27 @@ public class CameraPresenterImpl implements CameraPresenter {
 //                mListView.addData(list);
 //            }
 //        });
-// TODO 模拟延迟加载
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mListView.hideProgress();
-//                mListView.addData(list);
-//            }
-//        }, 1000);
-//FIXME Rxjava
-        Observable.create(new ObservableOnSubscribe<List<String>>() {
+        handler.postDelayed(new Runnable() {
             @Override
-            public void subscribe(ObservableEmitter<List<String>> emitter) throws Exception {
-                Thread.sleep(1000);//FIXME Rxjava模拟延迟加载，正式可删
-                emitter.onNext(list);
-                emitter.onComplete();
+            public void run() {
+                mListView.hideProgress();
+                mListView.addData(list);
             }
-        })
+        }, 1000);
+    }
+
+    private void success(Observable<List<String>> observable) {
+        observable
                 .subscribeOn(Schedulers.io())//设置可观察对象在Schedulers.io()的线程中发射数据
+                // （用于IO密集型的操作，例如读写SD卡文件，查询数据库，访问网络等，
+                // 具有线程缓存机制，在此调度器接收到任务后，先检查线程缓存池中，
+                // 是否有空闲的线程，如果有，则复用，如果没有则创建新的线程，并加入到线程池中，如果每次都没有空闲线程使用，可以无上限的创建新线程）
                 .observeOn(AndroidSchedulers.mainThread())//设置观察者在当前线程中接收数据
+                // （在Android UI线程中执行任务，为Android开发定制）
                 .subscribe(new Consumer<List<String>>() {
                     @Override
                     public void accept(@NonNull List<String> list) throws Exception {
-                        Log.e("sdf", "asdasd");
+                        Log.e("accept", "execute");
                         mListView.hideProgress();
                         mListView.addData(list);
                     }
