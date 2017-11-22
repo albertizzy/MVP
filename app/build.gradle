@@ -32,4 +32,6 @@ dependencies {
     implementation 'com.android.support:support-vector-drawable:26.1.0'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation project(':swipeback')
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 }
