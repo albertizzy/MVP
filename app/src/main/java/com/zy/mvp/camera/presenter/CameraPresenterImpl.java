@@ -33,11 +33,11 @@ public class CameraPresenterImpl implements CameraPresenter {
         if (page == 1) {
             mListView.showProgress();
         }
-        final List<String> list = new ArrayList<>();
-        for (int i = 0; i < CameraFragment.PAGE_SIZE; i++) {
-            list.add("item " + (i + 1));
-        }
 //FIXME Rxjava
+//        List<String> list = new ArrayList<>();
+//        for (int i = 0; i < CameraFragment.PAGE_SIZE; i++) {
+//            list.add("item " + (i + 1));
+//        }
 //        success(list);
         Observable<List<String>> observable = Observable.create(new ObservableOnSubscribe<List<String>>() {
             @Override
@@ -45,6 +45,10 @@ public class CameraPresenterImpl implements CameraPresenter {
                 Log.e("sleep", "start");
                 Thread.sleep(1000);//FIXME Rxjava模拟延迟加载，正式可删
                 Log.e("sleep", "end");
+                List<String> list = new ArrayList<>();
+                for (int i = 0; i < CameraFragment.PAGE_SIZE; i++) {
+                    list.add("item " + (i + 1));
+                }
                 emitter.onNext(list);
                 emitter.onComplete();
             }
