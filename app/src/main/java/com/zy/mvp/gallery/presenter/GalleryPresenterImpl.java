@@ -2,12 +2,21 @@ package com.zy.mvp.gallery.presenter;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.zy.mvp.gallery.view.GalleryView;
 import com.zy.mvp.gallery.widget.GalleryFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class GalleryPresenterImpl implements GalleryPresenter {
     private GalleryView mListView;
@@ -24,11 +33,45 @@ public class GalleryPresenterImpl implements GalleryPresenter {
         if (page == 1) {
             mListView.showProgress();
         }
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < GalleryFragment.PAGE_SIZE; i++) {
-            list.add("item " + (i + 1));
-        }
-        success(list);
+        //FIXME Rxjava
+//        List<String> list = new ArrayList<>();
+//        for (int i = 0; i < GalleryFragment.PAGE_SIZE; i++) {
+//            list.add("item " + (i + 1));
+//        }
+//        success(list);
+        Observable<List<String>> observable = Observable.create(new ObservableOnSubscribe<List<String>>() {
+            @Override
+            public void subscribe(ObservableEmitter<List<String>> emitter) throws Exception {
+                Log.e("sleep", "start");
+                Thread.sleep(1000);//FIXME Rxjava模拟延迟加载，正式可删
+                Log.e("sleep", "end");
+                List<String> list = new ArrayList<>();
+                for (int i = 0; i < GalleryFragment.PAGE_SIZE; i++) {
+                    list.add("item " + (i + 1));
+                }
+                emitter.onNext(list);
+                emitter.onComplete();
+            }
+        });
+        success(observable);
+    }
+
+    private void success(Observable<List<String>> observable) {
+        observable
+                .subscribeOn(Schedulers.io())//设置可观察对象在Schedulers.io()的线程中发射数据
+                // （用于IO密集型的操作，例如读写SD卡文件，查询数据库，访问网络等，
+                // 具有线程缓存机制，在此调度器接收到任务后，先检查线程缓存池中，
+                // 是否有空闲的线程，如果有，则复用，如果没有则创建新的线程，并加入到线程池中，如果每次都没有空闲线程使用，可以无上限的创建新线程）
+                .observeOn(AndroidSchedulers.mainThread())//设置观察者在当前线程中接收数据
+                // （在Android UI线程中执行任务，为Android开发定制）
+                .subscribe(new Consumer<List<String>>() {
+                    @Override
+                    public void accept(@NonNull List<String> list) throws Exception {
+                        Log.e("accept", "execute");
+                        mListView.hideProgress();
+                        mListView.addData(list);
+                    }
+                });
     }
 
     private void success(final List<String> list) {

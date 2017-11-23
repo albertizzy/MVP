@@ -56,24 +56,6 @@ public class CameraPresenterImpl implements CameraPresenter {
         success(observable);
     }
 
-    private void success(final List<String> list) {
-//TODO 模拟延迟加载
-//        handler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                mListView.hideProgress();
-//                mListView.addData(list);
-//            }
-//        });
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mListView.hideProgress();
-                mListView.addData(list);
-            }
-        }, 1000);
-    }
-
     private void success(Observable<List<String>> observable) {
         observable
                 .subscribeOn(Schedulers.io())//设置可观察对象在Schedulers.io()的线程中发射数据
@@ -90,6 +72,24 @@ public class CameraPresenterImpl implements CameraPresenter {
                         mListView.addData(list);
                     }
                 });
+    }
+
+    private void success(final List<String> list) {
+//TODO 模拟延迟加载
+//        handler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                mListView.hideProgress();
+//                mListView.addData(list);
+//            }
+//        });
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mListView.hideProgress();
+                mListView.addData(list);
+            }
+        }, 1000);
     }
 
     private void failure(final String message) {
