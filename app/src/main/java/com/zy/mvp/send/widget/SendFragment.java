@@ -95,7 +95,7 @@ public class SendFragment extends Fragment implements SendView {
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            new Handler().postDelayed(new Thread() {
+            new Handler().post(new Thread() {
                 @Override
                 public void run() {
                     pageIndex = 1;
@@ -104,7 +104,7 @@ public class SendFragment extends Fragment implements SendView {
                     }
                     mListPresenter.loadData(token, pageIndex);
                 }
-            }, 1000);
+            });
         }
     };
     private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {

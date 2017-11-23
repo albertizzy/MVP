@@ -105,13 +105,13 @@ public class SharePresenterImpl implements SharePresenter {
 //                mListView.addData(list);
 //            }
 //        });
-        handler.postDelayed(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 mListView.hideProgress();
                 mListView.addData(list);
             }
-        }, 1000);
+        });
     }
 
     private void failure(final String message) {
