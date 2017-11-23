@@ -54,11 +54,19 @@ public class SharePresenterImpl implements SharePresenter {
                 emitter.onNext(list);
                 emitter.onComplete();
             }
-        });
-        success(observable, page);
+        })
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        if (page == 1) {
+                            mListView.showProgress();
+                        }
+                    }
+                });
+        success(observable);
     }
 
-    private void success(Observable<List<String>> observable, final int page) {
+    private void success(Observable<List<String>> observable) {
         observable
                 .subscribeOn(Schedulers.io())//设置可观察对象在Schedulers.io()的线程中发射数据
                 // （用于IO密集型的操作，例如读写SD卡文件，查询数据库，访问网络等，
@@ -70,15 +78,6 @@ public class SharePresenterImpl implements SharePresenter {
                     @Override
                     public void run() throws Exception {
                         mListView.hideProgress();
-                    }
-                })
-// FIXME 写在这里是因为上面observeOn(AndroidSchedulers.mainThread())切换到了UI线程
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        if (page == 1) {
-                            mListView.showProgress();
-                        }
                     }
                 })
                 .subscribe(new Consumer<List<String>>() {
