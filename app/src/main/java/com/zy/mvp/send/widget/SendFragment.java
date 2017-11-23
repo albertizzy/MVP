@@ -1,7 +1,6 @@
 package com.zy.mvp.send.widget;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -95,16 +94,11 @@ public class SendFragment extends Fragment implements SendView {
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            new Handler().post(new Thread() {
-                @Override
-                public void run() {
-                    pageIndex = 1;
-                    if (mData != null) {
-                        mData.clear();
-                    }
-                    mListPresenter.loadData(token, pageIndex);
-                }
-            });
+            pageIndex = 1;
+            if (mData != null) {
+                mData.clear();
+            }
+            mListPresenter.loadData(token, pageIndex);
         }
     };
     private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
