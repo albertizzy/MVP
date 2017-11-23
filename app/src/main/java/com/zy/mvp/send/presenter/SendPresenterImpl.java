@@ -15,6 +15,8 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -30,10 +32,10 @@ public class SendPresenterImpl implements SendPresenter {
     @Override
     public void loadData(String token, final int page) {
         //只有第一页的或者刷新的时候才显示刷新进度条
-        if (page == 1) {
-            mListView.showProgress();
-        }
-//FIXME Rxjava
+// FIXME Rxjava 替换了下面8行
+//        if (page == 1) {
+//            mListView.showProgress();
+//        }
 //        List<String> list = new ArrayList<>();
 //        for (int i = 0; i < SendFragment.PAGE_SIZE; i++) {
 //            list.add("item " + (i + 1));
@@ -43,7 +45,7 @@ public class SendPresenterImpl implements SendPresenter {
             @Override
             public void subscribe(ObservableEmitter<List<String>> emitter) throws Exception {
                 Log.e("sleep", "start");
-                Thread.sleep(1000);//FIXME Rxjava模拟延迟加载，正式可删
+                Thread.sleep(1000);//FIXME Rxjava模拟延迟加载
                 Log.e("sleep", "end");
                 List<String> list = new ArrayList<>();
                 for (int i = 0; i < SendFragment.PAGE_SIZE; i++) {
@@ -52,7 +54,15 @@ public class SendPresenterImpl implements SendPresenter {
                 emitter.onNext(list);
                 emitter.onComplete();
             }
-        });
+        })
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        if (page == 1) {
+                            mListView.showProgress();
+                        }
+                    }
+                });
         success(observable);
     }
 
@@ -64,12 +74,23 @@ public class SendPresenterImpl implements SendPresenter {
                 // 是否有空闲的线程，如果有，则复用，如果没有则创建新的线程，并加入到线程池中，如果每次都没有空闲线程使用，可以无上限的创建新线程）
                 .observeOn(AndroidSchedulers.mainThread())//设置观察者在当前线程中接收数据
                 // （在Android UI线程中执行任务，为Android开发定制）
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        mListView.hideProgress();
+                    }
+                })
                 .subscribe(new Consumer<List<String>>() {
                     @Override
                     public void accept(@NonNull List<String> list) throws Exception {
                         Log.e("accept", "execute");
-                        mListView.hideProgress();
+// FIXME doFinally                       mListView.hideProgress();
                         mListView.addData(list);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mListView.showLoadFailMsg("失败");
                     }
                 });
     }
