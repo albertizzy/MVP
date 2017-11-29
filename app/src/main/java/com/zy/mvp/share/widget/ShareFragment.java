@@ -88,6 +88,9 @@ public class ShareFragment extends Fragment implements ShareView {
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         //调用ItemTouchHelper的attachToRecyclerView方法建立联系
         touchHelper.attachToRecyclerView(mRecyclerView);
+        //通过onCreateOptionsMenu()，fragment可以为activity的Options Menu提供菜单项。
+        // 为了确保这一方法成功实现回调。必须在onCreate()期间调用setHasOptionsMenu()告知Options Menu fragment要添加菜单项。
+        setHasOptionsMenu(true);
         return view;
     }
 
