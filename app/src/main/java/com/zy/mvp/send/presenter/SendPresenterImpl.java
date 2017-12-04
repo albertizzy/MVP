@@ -15,6 +15,7 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
@@ -23,10 +24,12 @@ import io.reactivex.schedulers.Schedulers;
 public class SendPresenterImpl implements SendPresenter {
     private SendView mListView;
     private Handler handler;
+    private CompositeDisposable mCompositeDisposable;
 
     public SendPresenterImpl(SendView listView) {
         this.mListView = listView;
         handler = new Handler(Looper.getMainLooper());
+        mCompositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -59,7 +62,7 @@ public class SendPresenterImpl implements SendPresenter {
     }
 
     private void success(Observable<List<String>> observable, final int page) {
-        observable
+        Disposable disposable = observable
                 .subscribeOn(Schedulers.io())//设置可观察对象在Schedulers.io()的线程中发射数据
                 // （用于IO密集型的操作，例如读写SD卡文件，查询数据库，访问网络等，
                 // 具有线程缓存机制，在此调度器接收到任务后，先检查线程缓存池中，
@@ -94,6 +97,7 @@ public class SendPresenterImpl implements SendPresenter {
                         Log.e("Throwable", throwable.getMessage());
                     }
                 });
+        mCompositeDisposable.add(disposable);
     }
 
     private void success(final List<String> list) {
@@ -121,5 +125,10 @@ public class SendPresenterImpl implements SendPresenter {
                 mListView.showLoadFailMsg(message);
             }
         });
+    }
+
+    @Override
+    public void unsubscribe() {
+        mCompositeDisposable.clear();
     }
 }

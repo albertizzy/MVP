@@ -177,4 +177,10 @@ public class SendFragment extends Fragment implements SendView {
 //                Snackbar.make(view, "加载失败！", Snackbar.LENGTH_SHORT).show();
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mListPresenter.unsubscribe();
+    }
 }
