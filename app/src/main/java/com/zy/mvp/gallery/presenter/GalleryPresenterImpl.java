@@ -62,6 +62,7 @@ public class GalleryPresenterImpl implements GalleryPresenter {
     }
 
     private void success(Observable<List<String>> observable, final int page) {
+        mCompositeDisposable.clear();
         Disposable disposable = observable
                 .subscribeOn(Schedulers.io())//设置可观察对象在Schedulers.io()的线程中发射数据
                 // （用于IO密集型的操作，例如读写SD卡文件，查询数据库，访问网络等，
