@@ -48,11 +48,24 @@ public class GalleryFragment extends Fragment implements GalleryView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListPresenter = new GalleryPresenterImpl(this);
         if (getArguments() != null) {
             token = getArguments().getString(TOKEN);
             isShowFooter = getArguments().getBoolean(ISSHOWFOOTER);
         }
+        mListPresenter = new GalleryPresenterImpl(this);
+        mAdapter = new GalleryRecyclerViewAdapter(getContext());
+        mAdapter.setOnItemClickLitener(new GalleryRecyclerViewAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Snackbar.make(view, position + " Gallery", Snackbar.LENGTH_SHORT).show();
+            }
+
+//            @Override
+//            public void onItemLongClick(View view, int position) {
+//                mData.remove(position);
+//                mAdapter.notifyItemRemoved(position);
+//            }
+        });
     }
 
     @Override
@@ -66,19 +79,6 @@ public class GalleryFragment extends Fragment implements GalleryView {
         mLayoutManager = new LinearLayoutManager(view.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext()));
-        mAdapter = new GalleryRecyclerViewAdapter(view.getContext());
-        mAdapter.setOnItemClickLitener(new GalleryRecyclerViewAdapter.OnItemClickLitener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Snackbar.make(view, position + " Gallery", Snackbar.LENGTH_SHORT).show();
-            }
-
-//            @Override
-//            public void onItemLongClick(View view, int position) {
-//                mData.remove(position);
-//                mAdapter.notifyItemRemoved(position);
-//            }
-        });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(mOnScrollListener);
         mOnRefreshListener.onRefresh();

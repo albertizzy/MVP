@@ -50,25 +50,12 @@ public class CameraFragment extends Fragment implements CameraView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListPresenter = new CameraPresenterImpl(this);
         if (getArguments() != null) {
             token = getArguments().getString(TOKEN);
             isShowFooter = getArguments().getBoolean(ISSHOWFOOTER);
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_camera, container, false);
-        mSwipeRefreshLayout = view.findViewById(R.id.swipe);
-        mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
-        mRecyclerView = view.findViewById(R.id.recycler);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(view.getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext()));
-        mAdapter = new CameraRecyclerViewAdapter(view.getContext());
+        mListPresenter = new CameraPresenterImpl(this);
+        mAdapter = new CameraRecyclerViewAdapter(getContext());
         mAdapter.setOnItemClickLitener(new CameraRecyclerViewAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -88,6 +75,19 @@ public class CameraFragment extends Fragment implements CameraView {
                 mAdapter.notifyItemRemoved(position);
             }
         });
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_camera, container, false);
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe);
+        mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
+        mRecyclerView = view.findViewById(R.id.recycler);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(view.getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(mOnScrollListener);
         mOnRefreshListener.onRefresh();

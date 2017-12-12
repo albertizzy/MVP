@@ -48,11 +48,24 @@ public class SendFragment extends Fragment implements SendView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListPresenter = new SendPresenterImpl(this);
         if (getArguments() != null) {
             token = getArguments().getString(TOKEN);
             isShowFooter = getArguments().getBoolean(ISSHOWFOOTER);
         }
+        mListPresenter = new SendPresenterImpl(this);
+        mAdapter = new SendRecyclerViewAdapter(getContext());
+        mAdapter.setOnItemClickLitener(new SendRecyclerViewAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Snackbar.make(view, position + " Send", Snackbar.LENGTH_SHORT).show();
+            }
+
+//            @Override
+//            public void onItemLongClick(View view, int position) {
+//                mData.remove(position);
+//                mAdapter.notifyItemRemoved(position);
+//            }
+        });
     }
 
     @Override
@@ -66,19 +79,6 @@ public class SendFragment extends Fragment implements SendView {
         mLayoutManager = new LinearLayoutManager(view.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext()));
-        mAdapter = new SendRecyclerViewAdapter(view.getContext());
-        mAdapter.setOnItemClickLitener(new SendRecyclerViewAdapter.OnItemClickLitener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Snackbar.make(view, position + " Send", Snackbar.LENGTH_SHORT).show();
-            }
-
-//            @Override
-//            public void onItemLongClick(View view, int position) {
-//                mData.remove(position);
-//                mAdapter.notifyItemRemoved(position);
-//            }
-        });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(mOnScrollListener);
         mOnRefreshListener.onRefresh();

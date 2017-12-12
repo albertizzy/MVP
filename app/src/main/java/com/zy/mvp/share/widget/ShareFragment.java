@@ -48,11 +48,24 @@ public class ShareFragment extends Fragment implements ShareView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListPresenter = new SharePresenterImpl(this);
         if (getArguments() != null) {
             token = getArguments().getString(TOKEN);
             isShowFooter = getArguments().getBoolean(ISSHOWFOOTER);
         }
+        mListPresenter = new SharePresenterImpl(this);
+        mAdapter = new ShareRecyclerViewAdapter(getContext());
+        mAdapter.setOnItemClickLitener(new ShareRecyclerViewAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Snackbar.make(view, position + " Share", Snackbar.LENGTH_SHORT).show();
+            }
+
+//            @Override
+//            public void onItemLongClick(View view, int position) {
+//                mData.remove(position);
+//                mAdapter.notifyItemRemoved(position);
+//            }
+        });
     }
 
     @Override
@@ -66,19 +79,6 @@ public class ShareFragment extends Fragment implements ShareView {
         mLayoutManager = new LinearLayoutManager(view.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext()));
-        mAdapter = new ShareRecyclerViewAdapter(view.getContext());
-        mAdapter.setOnItemClickLitener(new ShareRecyclerViewAdapter.OnItemClickLitener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Snackbar.make(view, position + " Share", Snackbar.LENGTH_SHORT).show();
-            }
-
-//            @Override
-//            public void onItemLongClick(View view, int position) {
-//                mData.remove(position);
-//                mAdapter.notifyItemRemoved(position);
-//            }
-        });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(mOnScrollListener);
         mOnRefreshListener.onRefresh();
