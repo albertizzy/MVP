@@ -35,6 +35,7 @@ public class CameraFragment extends Fragment implements CameraView {
     private RecyclerView mRecyclerView;
     public static final int PAGE_SIZE = 20;
     private CameraPresenter mListPresenter;
+    private View view;
 
     public static CameraFragment newInstance(String token, boolean isShowFooter) {
         CameraFragment fragment = new CameraFragment();
@@ -58,7 +59,7 @@ public class CameraFragment extends Fragment implements CameraView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_camera, container, false);
+        view = inflater.inflate(R.layout.fragment_camera, container, false);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe);
         mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
         mRecyclerView = view.findViewById(R.id.recycler);
@@ -95,14 +96,31 @@ public class CameraFragment extends Fragment implements CameraView {
         return view;
     }
 
+    /**
+     * 懒加载
+     *
+     * @param isVisibleToUser 用户是否可见
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (view != null) {
+                mOnRefreshListener.onRefresh();
+            }
+        }
+    }
+
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            pageIndex = 1;
-            if (mData != null) {
-                mData.clear();
+            if (getUserVisibleHint()) {
+                pageIndex = 1;
+                if (mData != null) {
+                    mData.clear();
+                }
+                mListPresenter.loadData(token, pageIndex);
             }
-            mListPresenter.loadData(token, pageIndex);
         }
     };
     private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
