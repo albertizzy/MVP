@@ -36,7 +36,7 @@ public class CameraFragment extends Fragment implements CameraView {
     public static final int PAGE_SIZE = 20;
     private CameraPresenter mListPresenter;
     private View view;
-    private boolean isFirstVisibleToUser = false;
+    private boolean isFirstVisibleToUser = true;
 
     public static CameraFragment newInstance(String token, boolean isShowFooter) {
         CameraFragment fragment = new CameraFragment();
@@ -106,7 +106,7 @@ public class CameraFragment extends Fragment implements CameraView {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            if (view != null) {
+            if (view != null && isFirstVisibleToUser) {
                 mOnRefreshListener.onRefresh();
             }
         }
@@ -115,13 +115,13 @@ public class CameraFragment extends Fragment implements CameraView {
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            if (getUserVisibleHint() && !isFirstVisibleToUser) {
+            if (getUserVisibleHint()) {
                 pageIndex = 1;
                 if (mData != null) {
                     mData.clear();
                 }
                 mListPresenter.loadData(token, pageIndex);
-                isFirstVisibleToUser = true;
+                isFirstVisibleToUser = false;
             }
         }
     };
