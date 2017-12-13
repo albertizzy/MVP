@@ -54,18 +54,7 @@ public class SendFragment extends Fragment implements SendContract.View {
         }
         mListPresenter = new SendPresenter(this);
         mAdapter = new SendRecyclerViewAdapter(getContext());
-        mAdapter.setOnItemClickListener(new SendRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Snackbar.make(view, position + " Send", Snackbar.LENGTH_SHORT).show();
-            }
-
-//            @Override
-//            public void onItemLongClick(View view, int position) {
-//                mData.remove(position);
-//                mAdapter.notifyItemRemoved(position);
-//            }
-        });
+        mAdapter.setOnItemClickListener(mOnItemClickListener);
     }
 
     @Override
@@ -94,6 +83,18 @@ public class SendFragment extends Fragment implements SendContract.View {
         return view;
     }
 
+    private SendRecyclerViewAdapter.OnItemClickListener mOnItemClickListener = new SendRecyclerViewAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            Snackbar.make(view, position + " Send", Snackbar.LENGTH_SHORT).show();
+        }
+
+//            @Override
+//            public void onItemLongClick(View view, int position) {
+//                mData.remove(position);
+//                mAdapter.notifyItemRemoved(position);
+//            }
+    };
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {

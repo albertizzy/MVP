@@ -54,18 +54,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         }
         mListPresenter = new GalleryPresenter(this);
         mAdapter = new GalleryRecyclerViewAdapter(getContext());
-        mAdapter.setOnItemClickListener(new GalleryRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Snackbar.make(view, position + " Gallery", Snackbar.LENGTH_SHORT).show();
-            }
-
-//            @Override
-//            public void onItemLongClick(View view, int position) {
-//                mData.remove(position);
-//                mAdapter.notifyItemRemoved(position);
-//            }
-        });
+        mAdapter.setOnItemClickListener(mOnItemClickListener);
     }
 
     @Override
@@ -94,6 +83,18 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         return view;
     }
 
+    private GalleryRecyclerViewAdapter.OnItemClickListener mOnItemClickListener = new GalleryRecyclerViewAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            Snackbar.make(view, position + " Gallery", Snackbar.LENGTH_SHORT).show();
+        }
+
+//            @Override
+//            public void onItemLongClick(View view, int position) {
+//                mData.remove(position);
+//                mAdapter.notifyItemRemoved(position);
+//            }
+    };
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {

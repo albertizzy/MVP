@@ -54,18 +54,7 @@ public class ShareFragment extends Fragment implements ShareContract.View {
         }
         mListPresenter = new SharePresenter(this);
         mAdapter = new ShareRecyclerViewAdapter(getContext());
-        mAdapter.setOnItemClickListener(new ShareRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Snackbar.make(view, position + " Share", Snackbar.LENGTH_SHORT).show();
-            }
-
-//            @Override
-//            public void onItemLongClick(View view, int position) {
-//                mData.remove(position);
-//                mAdapter.notifyItemRemoved(position);
-//            }
-        });
+        mAdapter.setOnItemClickListener(mOnItemClickListener);
     }
 
     @Override
@@ -94,6 +83,18 @@ public class ShareFragment extends Fragment implements ShareContract.View {
         return view;
     }
 
+    private ShareRecyclerViewAdapter.OnItemClickListener mOnItemClickListener = new ShareRecyclerViewAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            Snackbar.make(view, position + " Share", Snackbar.LENGTH_SHORT).show();
+        }
+
+//            @Override
+//            public void onItemLongClick(View view, int position) {
+//                mData.remove(position);
+//                mAdapter.notifyItemRemoved(position);
+//            }
+    };
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
