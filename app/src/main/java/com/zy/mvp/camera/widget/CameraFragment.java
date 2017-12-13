@@ -35,7 +35,6 @@ public class CameraFragment extends Fragment implements CameraView {
     private RecyclerView mRecyclerView;
     public static final int PAGE_SIZE = 20;
     private CameraPresenter mListPresenter;
-    private View view;
     private boolean isFirstVisibleToUser = true;
 
     public static CameraFragment newInstance(String token, boolean isShowFooter) {
@@ -80,7 +79,7 @@ public class CameraFragment extends Fragment implements CameraView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_camera, container, false);
+        View view = inflater.inflate(R.layout.fragment_camera, container, false);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe);
         mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
         mRecyclerView = view.findViewById(R.id.recycler);
@@ -106,7 +105,7 @@ public class CameraFragment extends Fragment implements CameraView {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            if (view != null && isFirstVisibleToUser) {
+            if (getView() != null && isFirstVisibleToUser) {
                 mOnRefreshListener.onRefresh();
             }
         }
