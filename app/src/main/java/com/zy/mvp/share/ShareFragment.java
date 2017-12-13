@@ -54,7 +54,7 @@ public class ShareFragment extends Fragment implements ShareContract.View {
         }
         mListPresenter = new SharePresenter(this);
         mAdapter = new ShareRecyclerViewAdapter(getContext());
-        mAdapter.setOnItemClickLitener(new ShareRecyclerViewAdapter.OnItemClickLitener() {
+        mAdapter.setOnItemClickListener(new ShareRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Snackbar.make(view, position + " Share", Snackbar.LENGTH_SHORT).show();
@@ -237,13 +237,13 @@ public class ShareFragment extends Fragment implements ShareContract.View {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mOnItemClickLitener.onItemClick(v, holder.getLayoutPosition());
+                        mOnItemClickListener.onItemClick(v, holder.getLayoutPosition());
                     }
                 });
 //            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
 //                @Override
 //                public boolean onLongClick(View v) {
-//                    mOnItemClickLitener.onItemLongClick(v, holder.getLayoutPosition());
+//                    mOnItemClickListener.onItemLongClick(v, holder.getLayoutPosition());
 //                    return false;
 //                }
 //            });
@@ -289,16 +289,16 @@ public class ShareFragment extends Fragment implements ShareContract.View {
             }
         }
 
-        public interface OnItemClickLitener {
+        public interface OnItemClickListener {
             void onItemClick(View view, int position);
 
 //        void onItemLongClick(View view, int position);
         }
 
-        private OnItemClickLitener mOnItemClickLitener;
+        private OnItemClickListener mOnItemClickListener;
 
-        public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
-            this.mOnItemClickLitener = mOnItemClickLitener;
+        public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+            this.mOnItemClickListener = mOnItemClickListener;
         }
 //    @Override
 //    public void onItemMove(int fromPosition, int toPosition) {

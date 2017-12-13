@@ -54,25 +54,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
         }
         mListPresenter = new CameraPresenter(this);
         mAdapter = new CameraRecyclerViewAdapter(getContext());
-        mAdapter.setOnItemClickLitener(new CameraRecyclerViewAdapter.OnItemClickLitener() {
-            @Override
-            public void onItemClick(View view, int position) {
-//                Toast.makeText(context, holder.getLayoutPosition() + " Camera", Toast.LENGTH_SHORT).show();
-//                Snackbar.make(view, position + " Camera", Snackbar.LENGTH_SHORT).show();
-                Intent intent = new Intent(view.getContext(), DetailActivity.class);
-//                    View transitionView = view.findViewById(R.id.ivNews);
-//                    ActivityOptionsCompat options =
-//                            ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-//                                    transitionView, getString(R.string.transition_news_img));
-                ActivityCompat.startActivity(view.getContext(), intent, null);
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-                mData.remove(position);
-                mAdapter.notifyItemRemoved(position);
-            }
-        });
+        mAdapter.setOnItemClickListener(mOnItemClickListener);
     }
 
     @Override
@@ -109,6 +91,26 @@ public class CameraFragment extends Fragment implements CameraContract.View {
             }
         }
     }
+
+    private CameraRecyclerViewAdapter.OnItemClickListener mOnItemClickListener = new CameraRecyclerViewAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View view, int position) {
+//                Toast.makeText(context, holder.getLayoutPosition() + " Camera", Toast.LENGTH_SHORT).show();
+//                Snackbar.make(view, position + " Camera", Snackbar.LENGTH_SHORT).show();
+            Intent intent = new Intent(view.getContext(), DetailActivity.class);
+//                    View transitionView = view.findViewById(R.id.ivNews);
+//                    ActivityOptionsCompat options =
+//                            ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+//                                    transitionView, getString(R.string.transition_news_img));
+            ActivityCompat.startActivity(view.getContext(), intent, null);
+        }
+
+        @Override
+        public void onItemLongClick(View view, int position) {
+            mData.remove(position);
+            mAdapter.notifyItemRemoved(position);
+        }
+    };
 
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
@@ -256,13 +258,13 @@ public class CameraFragment extends Fragment implements CameraContract.View {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mOnItemClickLitener.onItemClick(v, holder.getLayoutPosition());
+                        mOnItemClickListener.onItemClick(v, holder.getLayoutPosition());
                     }
                 });
                 viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        mOnItemClickLitener.onItemLongClick(v, holder.getLayoutPosition());
+                        mOnItemClickListener.onItemLongClick(v, holder.getLayoutPosition());
                         return false;
                     }
                 });
@@ -308,16 +310,16 @@ public class CameraFragment extends Fragment implements CameraContract.View {
             }
         }
 
-        public interface OnItemClickLitener {
+        public interface OnItemClickListener {
             void onItemClick(View view, int position);
 
             void onItemLongClick(View view, int position);
         }
 
-        private OnItemClickLitener mOnItemClickLitener;
+        private OnItemClickListener mOnItemClickListener;
 
-        public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
-            this.mOnItemClickLitener = mOnItemClickLitener;
+        public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+            this.mOnItemClickListener = mOnItemClickListener;
         }
     }
 }
