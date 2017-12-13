@@ -1,4 +1,4 @@
-package com.zy.mvp.main.presenter;
+package com.zy.mvp.main;
 
 public interface MainPresenter {
     void switchNavigation(int id);

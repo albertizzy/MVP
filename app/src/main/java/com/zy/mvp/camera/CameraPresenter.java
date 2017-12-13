@@ -1,4 +1,4 @@
-package com.zy.mvp.camera.presenter;
+package com.zy.mvp.camera;
 
 public interface CameraPresenter {
     void loadData(String token, int page);

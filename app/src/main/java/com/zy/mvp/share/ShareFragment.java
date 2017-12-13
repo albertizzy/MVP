@@ -1,4 +1,4 @@
-package com.zy.mvp.send.widget;
+package com.zy.mvp.share;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,9 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zy.mvp.R;
-import com.zy.mvp.send.presenter.SendPresenter;
-import com.zy.mvp.send.presenter.SendPresenterImpl;
-import com.zy.mvp.send.view.SendView;
 import com.zy.mvp.utils.DividerItemDecoration;
 import com.zy.mvp.utils.touchhelper.ItemTouchHelperAdapter;
 import com.zy.mvp.utils.touchhelper.SimpleItemTouchHelperCallback;
@@ -25,22 +22,22 @@ import com.zy.mvp.utils.touchhelper.SimpleItemTouchHelperCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SendFragment extends Fragment implements SendView {
+public class ShareFragment extends Fragment implements ShareView {
     private static final String TOKEN = "token";
     private static final String ISSHOWFOOTER = "isShowFooter";
     private String token;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private SendRecyclerViewAdapter mAdapter;
+    private ShareRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private int pageIndex = 1;
     private boolean isShowFooter = false;
     private List<String> mData;
     private RecyclerView mRecyclerView;
     public static final int PAGE_SIZE = 20;
-    private SendPresenter mListPresenter;
+    private SharePresenter mListPresenter;
 
-    public static SendFragment newInstance(String token, boolean isShowFooter) {
-        SendFragment fragment = new SendFragment();
+    public static ShareFragment newInstance(String token, boolean isShowFooter) {
+        ShareFragment fragment = new ShareFragment();
         Bundle bundle = new Bundle();
         bundle.putString(TOKEN, token);
         bundle.putBoolean(ISSHOWFOOTER, isShowFooter);
@@ -55,12 +52,12 @@ public class SendFragment extends Fragment implements SendView {
             token = getArguments().getString(TOKEN);
             isShowFooter = getArguments().getBoolean(ISSHOWFOOTER);
         }
-        mListPresenter = new SendPresenterImpl(this);
-        mAdapter = new SendRecyclerViewAdapter(getContext());
-        mAdapter.setOnItemClickLitener(new SendRecyclerViewAdapter.OnItemClickLitener() {
+        mListPresenter = new SharePresenterImpl(this);
+        mAdapter = new ShareRecyclerViewAdapter(getContext());
+        mAdapter.setOnItemClickLitener(new ShareRecyclerViewAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
-                Snackbar.make(view, position + " Send", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view, position + " Share", Snackbar.LENGTH_SHORT).show();
             }
 
 //            @Override
@@ -74,7 +71,7 @@ public class SendFragment extends Fragment implements SendView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_send, container, false);
+        View view = inflater.inflate(R.layout.fragment_share, container, false);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe);
         mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
         mRecyclerView = view.findViewById(R.id.recycler);
@@ -187,14 +184,14 @@ public class SendFragment extends Fragment implements SendView {
         mListPresenter.unsubscribe();
     }
 
-    private static class SendRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
+    private static class ShareRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
         private List<String> mData;
         private final Context context;
         private static final int TYPE_ITEM = 0;
         private static final int TYPE_FOOTER = 1;
         private boolean mShowFooter = false;
 
-        public SendRecyclerViewAdapter(Context context) {
+        public ShareRecyclerViewAdapter(Context context) {
             this.context = context;
         }
 
@@ -303,7 +300,6 @@ public class SendFragment extends Fragment implements SendView {
         public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
             this.mOnItemClickLitener = mOnItemClickLitener;
         }
-
 //    @Override
 //    public void onItemMove(int fromPosition, int toPosition) {
 //        Collections.swap(mData, fromPosition, toPosition);

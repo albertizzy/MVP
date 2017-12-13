@@ -1,4 +1,4 @@
-package com.zy.mvp.detail.view;
+package com.zy.mvp.detail;
 
 public interface DetailView {
     void showDetialContent(String detailContent);

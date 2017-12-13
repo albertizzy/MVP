@@ -1,8 +1,8 @@
-package com.zy.mvp.send.view;
+package com.zy.mvp.share;
 
 import java.util.List;
 
-public interface SendView {
+public interface ShareView {
     void showProgress();
 
     void addData(List<String> mData);

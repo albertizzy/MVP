@@ -1,8 +1,8 @@
-package com.zy.mvp.camera.view;
+package com.zy.mvp.send;
 
 import java.util.List;
 
-public interface CameraView {
+public interface SendView {
     void showProgress();
 
     void addData(List<String> mData);

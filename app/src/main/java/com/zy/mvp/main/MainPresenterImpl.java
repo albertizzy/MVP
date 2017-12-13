@@ -1,7 +1,6 @@
-package com.zy.mvp.main.presenter;
+package com.zy.mvp.main;
 
 import com.zy.mvp.R;
-import com.zy.mvp.main.view.MainView;
 
 public class MainPresenterImpl implements MainPresenter {
     private MainView mMainView;

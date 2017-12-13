@@ -1,4 +1,4 @@
-package com.zy.mvp.main.view;
+package com.zy.mvp.main;
 
 public interface MainView {
     void switch2Camera(int id);

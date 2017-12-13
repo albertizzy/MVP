@@ -1,10 +1,9 @@
-package com.zy.mvp.detail.widget;
+package com.zy.mvp.detail;
 
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
 import com.zy.mvp.R;
-import com.zy.mvp.detail.view.DetailView;
 import com.zy.mvp.utils.ToolsUtil;
 
 import me.imid.swipebacklayout.lib.SwipeBackLayout;

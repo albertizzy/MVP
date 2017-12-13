@@ -1,4 +1,4 @@
-package com.zy.mvp.tab.widget;
+package com.zy.mvp.tab;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zy.mvp.R;
-import com.zy.mvp.camera.widget.CameraFragment;
+import com.zy.mvp.camera.CameraFragment;
 
 import java.util.ArrayList;
 import java.util.List;

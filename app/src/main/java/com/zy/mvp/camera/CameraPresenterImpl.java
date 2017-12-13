@@ -1,11 +1,8 @@
-package com.zy.mvp.camera.presenter;
+package com.zy.mvp.camera;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-
-import com.zy.mvp.camera.view.CameraView;
-import com.zy.mvp.camera.widget.CameraFragment;
 
 import java.util.ArrayList;
 import java.util.List;

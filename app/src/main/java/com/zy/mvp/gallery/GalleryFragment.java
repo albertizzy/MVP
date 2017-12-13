@@ -1,13 +1,13 @@
-package com.zy.mvp.camera.widget;
+package com.zy.mvp.gallery;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,32 +15,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zy.mvp.R;
-import com.zy.mvp.camera.presenter.CameraPresenter;
-import com.zy.mvp.camera.presenter.CameraPresenterImpl;
-import com.zy.mvp.camera.view.CameraView;
-import com.zy.mvp.detail.widget.DetailActivity;
 import com.zy.mvp.utils.DividerItemDecoration;
+import com.zy.mvp.utils.touchhelper.ItemTouchHelperAdapter;
+import com.zy.mvp.utils.touchhelper.SimpleItemTouchHelperCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CameraFragment extends Fragment implements CameraView {
+public class GalleryFragment extends Fragment implements GalleryView {
     private static final String TOKEN = "token";
     private static final String ISSHOWFOOTER = "isShowFooter";
     private String token;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private CameraRecyclerViewAdapter mAdapter;
+    private GalleryRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private int pageIndex = 1;
     private boolean isShowFooter = false;
     private List<String> mData;
     private RecyclerView mRecyclerView;
     public static final int PAGE_SIZE = 20;
-    private CameraPresenter mListPresenter;
-    private boolean isFirstVisibleToUser = true;
+    private GalleryPresenter mListPresenter;
 
-    public static CameraFragment newInstance(String token, boolean isShowFooter) {
-        CameraFragment fragment = new CameraFragment();
+    public static GalleryFragment newInstance(String token, boolean isShowFooter) {
+        GalleryFragment fragment = new GalleryFragment();
         Bundle bundle = new Bundle();
         bundle.putString(TOKEN, token);
         bundle.putBoolean(ISSHOWFOOTER, isShowFooter);
@@ -55,33 +52,26 @@ public class CameraFragment extends Fragment implements CameraView {
             token = getArguments().getString(TOKEN);
             isShowFooter = getArguments().getBoolean(ISSHOWFOOTER);
         }
-        mListPresenter = new CameraPresenterImpl(this);
-        mAdapter = new CameraRecyclerViewAdapter(getContext());
-        mAdapter.setOnItemClickLitener(new CameraRecyclerViewAdapter.OnItemClickLitener() {
+        mListPresenter = new GalleryPresenterImpl(this);
+        mAdapter = new GalleryRecyclerViewAdapter(getContext());
+        mAdapter.setOnItemClickLitener(new GalleryRecyclerViewAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
-//                Toast.makeText(context, holder.getLayoutPosition() + " Camera", Toast.LENGTH_SHORT).show();
-//                Snackbar.make(view, position + " Camera", Snackbar.LENGTH_SHORT).show();
-                Intent intent = new Intent(view.getContext(), DetailActivity.class);
-//                    View transitionView = view.findViewById(R.id.ivNews);
-//                    ActivityOptionsCompat options =
-//                            ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-//                                    transitionView, getString(R.string.transition_news_img));
-                ActivityCompat.startActivity(view.getContext(), intent, null);
+                Snackbar.make(view, position + " Gallery", Snackbar.LENGTH_SHORT).show();
             }
 
-            @Override
-            public void onItemLongClick(View view, int position) {
-                mData.remove(position);
-                mAdapter.notifyItemRemoved(position);
-            }
+//            @Override
+//            public void onItemLongClick(View view, int position) {
+//                mData.remove(position);
+//                mAdapter.notifyItemRemoved(position);
+//            }
         });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_camera, container, false);
+        View view = inflater.inflate(R.layout.fragment_gallery, container, false);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe);
         mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
         mRecyclerView = view.findViewById(R.id.recycler);
@@ -92,38 +82,26 @@ public class CameraFragment extends Fragment implements CameraView {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(mOnScrollListener);
         mOnRefreshListener.onRefresh();
+        //先实例化Callback
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
+        //用Callback构造ItemtouchHelper
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        //调用ItemTouchHelper的attachToRecyclerView方法建立联系
+        touchHelper.attachToRecyclerView(mRecyclerView);
         //通过onCreateOptionsMenu()，fragment可以为activity的Options Menu提供菜单项。
         // 为了确保这一方法成功实现回调。必须在onCreate()期间调用setHasOptionsMenu()告知Options Menu fragment要添加菜单项。
         setHasOptionsMenu(true);
         return view;
     }
 
-    /**
-     * 懒加载
-     *
-     * @param isVisibleToUser 用户是否可见
-     */
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            if (getView() != null && isFirstVisibleToUser) {
-                mOnRefreshListener.onRefresh();
-            }
-        }
-    }
-
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            if (getUserVisibleHint()) {
-                pageIndex = 1;
-                if (mData != null) {
-                    mData.clear();
-                }
-                mListPresenter.loadData(token, pageIndex);
-                isFirstVisibleToUser = false;
+            pageIndex = 1;
+            if (mData != null) {
+                mData.clear();
             }
+            mListPresenter.loadData(token, pageIndex);
         }
     };
     private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -206,14 +184,14 @@ public class CameraFragment extends Fragment implements CameraView {
         mListPresenter.unsubscribe();
     }
 
-    private static class CameraRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static class GalleryRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
         private List<String> mData;
         private final Context context;
         private static final int TYPE_ITEM = 0;
         private static final int TYPE_FOOTER = 1;
         private boolean mShowFooter = false;
 
-        public CameraRecyclerViewAdapter(Context context) {
+        public GalleryRecyclerViewAdapter(Context context) {
             this.context = context;
         }
 
@@ -262,13 +240,13 @@ public class CameraFragment extends Fragment implements CameraView {
                         mOnItemClickLitener.onItemClick(v, holder.getLayoutPosition());
                     }
                 });
-                viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        mOnItemClickLitener.onItemLongClick(v, holder.getLayoutPosition());
-                        return false;
-                    }
-                });
+//            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    mOnItemClickLitener.onItemLongClick(v, holder.getLayoutPosition());
+//                    return false;
+//                }
+//            });
             }
         }
 
@@ -314,13 +292,25 @@ public class CameraFragment extends Fragment implements CameraView {
         public interface OnItemClickLitener {
             void onItemClick(View view, int position);
 
-            void onItemLongClick(View view, int position);
+//        void onItemLongClick(View view, int position);
         }
 
         private OnItemClickLitener mOnItemClickLitener;
 
         public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
             this.mOnItemClickLitener = mOnItemClickLitener;
+        }
+
+//    @Override
+//    public void onItemMove(int fromPosition, int toPosition) {
+//        Collections.swap(mData, fromPosition, toPosition);
+//        notifyItemMoved(fromPosition, toPosition);
+//    }
+
+        @Override
+        public void onItemDissmiss(int position) {
+            mData.remove(position);
+            notifyItemRemoved(position);
         }
     }
 }

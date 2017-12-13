@@ -1,8 +1,8 @@
-package com.zy.mvp.share.view;
+package com.zy.mvp.gallery;
 
 import java.util.List;
 
-public interface ShareView {
+public interface GalleryView {
     void showProgress();
 
     void addData(List<String> mData);

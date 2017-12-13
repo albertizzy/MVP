@@ -1,6 +1,6 @@
-package com.zy.mvp.share.presenter;
+package com.zy.mvp.gallery;
 
-public interface SharePresenter {
+public interface GalleryPresenter {
     void loadData(String token, int page);
 
     void unsubscribe();

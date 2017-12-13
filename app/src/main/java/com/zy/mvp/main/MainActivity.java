@@ -1,4 +1,4 @@
-package com.zy.mvp.main.widget;
+package com.zy.mvp.main;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,13 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.zy.mvp.R;
-import com.zy.mvp.gallery.widget.GalleryFragment;
-import com.zy.mvp.main.presenter.MainPresenter;
-import com.zy.mvp.main.presenter.MainPresenterImpl;
-import com.zy.mvp.main.view.MainView;
-import com.zy.mvp.send.widget.SendFragment;
-import com.zy.mvp.share.widget.ShareFragment;
-import com.zy.mvp.tab.widget.TabFragment;
+import com.zy.mvp.gallery.GalleryFragment;
+import com.zy.mvp.send.SendFragment;
+import com.zy.mvp.share.ShareFragment;
+import com.zy.mvp.tab.TabFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MainView {

@@ -1,11 +1,8 @@
-package com.zy.mvp.send.presenter;
+package com.zy.mvp.share;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-
-import com.zy.mvp.send.view.SendView;
-import com.zy.mvp.send.widget.SendFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +18,12 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class SendPresenterImpl implements SendPresenter {
-    private SendView mListView;
+public class SharePresenterImpl implements SharePresenter {
+    private ShareView mListView;
     private Handler handler;
     private CompositeDisposable mCompositeDisposable;
 
-    public SendPresenterImpl(SendView listView) {
+    public SharePresenterImpl(ShareView listView) {
         this.mListView = listView;
         handler = new Handler(Looper.getMainLooper());
         mCompositeDisposable = new CompositeDisposable();
@@ -40,7 +37,7 @@ public class SendPresenterImpl implements SendPresenter {
 // FIXME move to doOnSubscribe           mListView.showProgress();
 //        }
 //        List<String> list = new ArrayList<>();
-//        for (int i = 0; i < SendFragment.PAGE_SIZE; i++) {
+//        for (int i = 0; i < ShareFragment.PAGE_SIZE; i++) {
 //            list.add("item " + (i + 1));
 //        }
 //        success(list);
@@ -51,7 +48,7 @@ public class SendPresenterImpl implements SendPresenter {
                 Thread.sleep(1000);//FIXME Rxjava模拟延迟加载
                 Log.e("sleep", "end");
                 List<String> list = new ArrayList<>();
-                for (int i = 0; i < SendFragment.PAGE_SIZE; i++) {
+                for (int i = 0; i < ShareFragment.PAGE_SIZE; i++) {
                     list.add("item " + (i + 1));
                 }
                 emitter.onNext(list);
@@ -110,13 +107,13 @@ public class SendPresenterImpl implements SendPresenter {
 //                mListView.addData(list);
 //            }
 //        });
-        handler.postDelayed(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 mListView.hideProgress();
                 mListView.addData(list);
             }
-        }, 1000);
+        });
     }
 
     private void failure(final String message) {

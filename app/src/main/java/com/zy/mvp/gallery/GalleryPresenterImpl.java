@@ -1,11 +1,8 @@
-package com.zy.mvp.gallery.presenter;
+package com.zy.mvp.gallery;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-
-import com.zy.mvp.gallery.view.GalleryView;
-import com.zy.mvp.gallery.widget.GalleryFragment;
 
 import java.util.ArrayList;
 import java.util.List;

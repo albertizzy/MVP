@@ -1,6 +1,6 @@
-package com.zy.mvp.send.presenter;
+package com.zy.mvp.share;
 
-public interface SendPresenter {
+public interface SharePresenter {
     void loadData(String token, int page);
 
     void unsubscribe();

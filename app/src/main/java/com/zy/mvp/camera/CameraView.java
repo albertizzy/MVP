@@ -1,8 +1,8 @@
-package com.zy.mvp.gallery.view;
+package com.zy.mvp.camera;
 
 import java.util.List;
 
-public interface GalleryView {
+public interface CameraView {
     void showProgress();
 
     void addData(List<String> mData);
