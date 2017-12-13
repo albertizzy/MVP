@@ -22,7 +22,7 @@ import com.zy.mvp.utils.touchhelper.SimpleItemTouchHelperCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SendFragment extends Fragment implements SendView {
+public class SendFragment extends Fragment implements SendContract.View {
     private static final String TOKEN = "token";
     private static final String ISSHOWFOOTER = "isShowFooter";
     private String token;
@@ -34,7 +34,7 @@ public class SendFragment extends Fragment implements SendView {
     private List<String> mData;
     private RecyclerView mRecyclerView;
     public static final int PAGE_SIZE = 20;
-    private SendPresenter mListPresenter;
+    private SendContract.Presenter mListPresenter;
 
     public static SendFragment newInstance(String token, boolean isShowFooter) {
         SendFragment fragment = new SendFragment();
@@ -52,7 +52,7 @@ public class SendFragment extends Fragment implements SendView {
             token = getArguments().getString(TOKEN);
             isShowFooter = getArguments().getBoolean(ISSHOWFOOTER);
         }
-        mListPresenter = new SendPresenterImpl(this);
+        mListPresenter = new SendPresenter(this);
         mAdapter = new SendRecyclerViewAdapter(getContext());
         mAdapter.setOnItemClickLitener(new SendRecyclerViewAdapter.OnItemClickLitener() {
             @Override

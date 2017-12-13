@@ -21,7 +21,7 @@ import com.zy.mvp.utils.DividerItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CameraFragment extends Fragment implements CameraView {
+public class CameraFragment extends Fragment implements CameraContract.View {
     private static final String TOKEN = "token";
     private static final String ISSHOWFOOTER = "isShowFooter";
     private String token;
@@ -33,7 +33,7 @@ public class CameraFragment extends Fragment implements CameraView {
     private List<String> mData;
     private RecyclerView mRecyclerView;
     public static final int PAGE_SIZE = 20;
-    private CameraPresenter mListPresenter;
+    private CameraContract.Presenter mListPresenter;
     private boolean isFirstVisibleToUser = true;
 
     public static CameraFragment newInstance(String token, boolean isShowFooter) {
@@ -52,7 +52,7 @@ public class CameraFragment extends Fragment implements CameraView {
             token = getArguments().getString(TOKEN);
             isShowFooter = getArguments().getBoolean(ISSHOWFOOTER);
         }
-        mListPresenter = new CameraPresenterImpl(this);
+        mListPresenter = new CameraPresenter(this);
         mAdapter = new CameraRecyclerViewAdapter(getContext());
         mAdapter.setOnItemClickLitener(new CameraRecyclerViewAdapter.OnItemClickLitener() {
             @Override

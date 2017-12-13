@@ -17,8 +17,8 @@ import com.zy.mvp.share.ShareFragment;
 import com.zy.mvp.tab.TabFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainView {
-    private MainPresenter mMainPresenter;
+        implements NavigationView.OnNavigationItemSelectedListener, MainContract.View {
+    private MainContract.Presenter mMainPresenter;
     private Toolbar toolbar;
     private DrawerLayout drawer;
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        mMainPresenter = new MainPresenterImpl(this);
+        mMainPresenter = new MainPresenter(this);
         navigationView.setCheckedItem(R.id.nav_camera);
         switch2Camera(R.id.nav_camera);
     }

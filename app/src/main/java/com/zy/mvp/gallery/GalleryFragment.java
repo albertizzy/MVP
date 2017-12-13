@@ -22,7 +22,7 @@ import com.zy.mvp.utils.touchhelper.SimpleItemTouchHelperCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GalleryFragment extends Fragment implements GalleryView {
+public class GalleryFragment extends Fragment implements GalleryContract.View {
     private static final String TOKEN = "token";
     private static final String ISSHOWFOOTER = "isShowFooter";
     private String token;
@@ -34,7 +34,7 @@ public class GalleryFragment extends Fragment implements GalleryView {
     private List<String> mData;
     private RecyclerView mRecyclerView;
     public static final int PAGE_SIZE = 20;
-    private GalleryPresenter mListPresenter;
+    private GalleryContract.Presenter mListPresenter;
 
     public static GalleryFragment newInstance(String token, boolean isShowFooter) {
         GalleryFragment fragment = new GalleryFragment();
@@ -52,7 +52,7 @@ public class GalleryFragment extends Fragment implements GalleryView {
             token = getArguments().getString(TOKEN);
             isShowFooter = getArguments().getBoolean(ISSHOWFOOTER);
         }
-        mListPresenter = new GalleryPresenterImpl(this);
+        mListPresenter = new GalleryPresenter(this);
         mAdapter = new GalleryRecyclerViewAdapter(getContext());
         mAdapter.setOnItemClickLitener(new GalleryRecyclerViewAdapter.OnItemClickLitener() {
             @Override

@@ -22,7 +22,7 @@ import com.zy.mvp.utils.touchhelper.SimpleItemTouchHelperCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShareFragment extends Fragment implements ShareView {
+public class ShareFragment extends Fragment implements ShareContract.View {
     private static final String TOKEN = "token";
     private static final String ISSHOWFOOTER = "isShowFooter";
     private String token;
@@ -34,7 +34,7 @@ public class ShareFragment extends Fragment implements ShareView {
     private List<String> mData;
     private RecyclerView mRecyclerView;
     public static final int PAGE_SIZE = 20;
-    private SharePresenter mListPresenter;
+    private ShareContract.Presenter mListPresenter;
 
     public static ShareFragment newInstance(String token, boolean isShowFooter) {
         ShareFragment fragment = new ShareFragment();
@@ -52,7 +52,7 @@ public class ShareFragment extends Fragment implements ShareView {
             token = getArguments().getString(TOKEN);
             isShowFooter = getArguments().getBoolean(ISSHOWFOOTER);
         }
-        mListPresenter = new SharePresenterImpl(this);
+        mListPresenter = new SharePresenter(this);
         mAdapter = new ShareRecyclerViewAdapter(getContext());
         mAdapter.setOnItemClickLitener(new ShareRecyclerViewAdapter.OnItemClickLitener() {
             @Override
