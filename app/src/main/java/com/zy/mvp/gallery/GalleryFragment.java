@@ -219,7 +219,21 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
             if (viewType == TYPE_ITEM) {
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.recycler_item, parent, false);
-                return new ViewHolder(view);
+                final MyViewHolder myViewHolder = new MyViewHolder(view);
+                myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mOnItemClickListener.onItemClick(v, myViewHolder.getLayoutPosition());
+                    }
+                });
+//            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    mOnItemClickListener.onItemLongClick(v, myViewHolder.getLayoutPosition());
+//                    return false;
+//                }
+//            });
+                return myViewHolder;
             } else {
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.fragment_footer, null);
@@ -231,23 +245,10 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
 
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-            if (holder instanceof ViewHolder) {
-                final ViewHolder viewHolder = (ViewHolder) holder;
-                viewHolder.mItemId.setText((position + 1) + "");
-                viewHolder.mItemName.setText(mData.get(position));
-                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mOnItemClickListener.onItemClick(v, holder.getLayoutPosition());
-                    }
-                });
-//            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    mOnItemClickListener.onItemLongClick(v, holder.getLayoutPosition());
-//                    return false;
-//                }
-//            });
+            if (holder instanceof MyViewHolder) {
+                final MyViewHolder myViewHolder = (MyViewHolder) holder;
+                myViewHolder.mItemId.setText((position + 1) + "");
+                myViewHolder.mItemName.setText(mData.get(position));
             }
         }
 
@@ -274,11 +275,11 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
             }
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class MyViewHolder extends RecyclerView.ViewHolder {
             public TextView mItemId;
             public TextView mItemName;
 
-            public ViewHolder(View view) {
+            public MyViewHolder(View view) {
                 super(view);
                 mItemId = view.findViewById(R.id.itemid);
                 mItemName = view.findViewById(R.id.itemname);
