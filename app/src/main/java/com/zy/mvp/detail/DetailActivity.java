@@ -27,7 +27,7 @@ public class DetailActivity extends SwipeBackActivity implements DetailView {
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View view) {
+//            public void onClick(View v) {
 //                onBackPressed();
 //            }
 //        });
