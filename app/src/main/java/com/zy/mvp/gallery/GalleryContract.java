@@ -2,7 +2,7 @@ package com.zy.mvp.gallery;
 
 import java.util.List;
 
-public interface GalleryContract {
+interface GalleryContract {
     interface View {
         void showProgress();
 

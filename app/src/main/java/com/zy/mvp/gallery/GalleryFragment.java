@@ -2,6 +2,7 @@ package com.zy.mvp.gallery;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -58,7 +59,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe);
@@ -83,7 +84,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         return view;
     }
 
-    private GalleryRecyclerViewAdapter.OnItemClickListener mOnItemClickListener = new GalleryRecyclerViewAdapter.OnItemClickListener() {
+    private final GalleryRecyclerViewAdapter.OnItemClickListener mOnItemClickListener = new GalleryRecyclerViewAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
             Snackbar.make(view, position + " Gallery", Snackbar.LENGTH_SHORT).show();
@@ -95,7 +96,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
 //                mAdapter.notifyItemRemoved(position);
 //            }
     };
-    private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+    private final SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
             pageIndex = 1;
@@ -105,7 +106,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
             mListPresenter.loadData(token, pageIndex);
         }
     };
-    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
+    private final RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
         private int lastVisibleItem;
 
         @Override
@@ -191,7 +192,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         private static final int TYPE_ITEM = 0;
         private static final int TYPE_FOOTER = 1;
         private boolean mShowFooter = false;
-        private LayoutInflater mLayoutInflater;
+        private final LayoutInflater mLayoutInflater;
 
         public GalleryRecyclerViewAdapter(Context context) {
             this.context = context;
@@ -247,7 +248,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
             if (holder instanceof MyViewHolder) {
                 final MyViewHolder myViewHolder = (MyViewHolder) holder;
-                myViewHolder.mItemId.setText((position + 1) + "");
+                myViewHolder.mItemId.setText(String.valueOf(position + 1));
                 myViewHolder.mItemName.setText(mData.get(position));
             }
         }
@@ -276,8 +277,8 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            public TextView mItemId;
-            public TextView mItemName;
+            public final TextView mItemId;
+            public final TextView mItemName;
 
             public MyViewHolder(View view) {
                 super(view);

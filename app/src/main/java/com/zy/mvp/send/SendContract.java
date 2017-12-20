@@ -2,7 +2,7 @@ package com.zy.mvp.send;
 
 import java.util.List;
 
-public interface SendContract {
+interface SendContract {
     interface View {
         void showProgress();
 

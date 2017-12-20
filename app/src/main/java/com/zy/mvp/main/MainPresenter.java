@@ -3,7 +3,7 @@ package com.zy.mvp.main;
 import com.zy.mvp.R;
 
 public class MainPresenter implements MainContract.Presenter {
-    private MainContract.View mMainView;
+    private final MainContract.View mMainView;
 
     public MainPresenter(MainContract.View mainView) {
         this.mMainView = mainView;

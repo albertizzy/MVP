@@ -2,6 +2,7 @@ package com.zy.mvp.send;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -58,7 +59,7 @@ public class SendFragment extends Fragment implements SendContract.View {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_send, container, false);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe);
@@ -83,7 +84,7 @@ public class SendFragment extends Fragment implements SendContract.View {
         return view;
     }
 
-    private SendRecyclerViewAdapter.OnItemClickListener mOnItemClickListener = new SendRecyclerViewAdapter.OnItemClickListener() {
+    private final SendRecyclerViewAdapter.OnItemClickListener mOnItemClickListener = new SendRecyclerViewAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
             Snackbar.make(view, position + " Send", Snackbar.LENGTH_SHORT).show();
@@ -95,7 +96,7 @@ public class SendFragment extends Fragment implements SendContract.View {
 //                mAdapter.notifyItemRemoved(position);
 //            }
     };
-    private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+    private final SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
             pageIndex = 1;
@@ -105,7 +106,7 @@ public class SendFragment extends Fragment implements SendContract.View {
             mListPresenter.loadData(token, pageIndex);
         }
     };
-    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
+    private final RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
         private int lastVisibleItem;
 
         @Override
@@ -191,7 +192,7 @@ public class SendFragment extends Fragment implements SendContract.View {
         private static final int TYPE_ITEM = 0;
         private static final int TYPE_FOOTER = 1;
         private boolean mShowFooter = false;
-        private LayoutInflater mLayoutInflater;
+        private final LayoutInflater mLayoutInflater;
 
         public SendRecyclerViewAdapter(Context context) {
             this.context = context;
@@ -247,7 +248,7 @@ public class SendFragment extends Fragment implements SendContract.View {
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
             if (holder instanceof MyViewHolder) {
                 final MyViewHolder myViewHolder = (MyViewHolder) holder;
-                myViewHolder.mItemId.setText((position + 1) + "");
+                myViewHolder.mItemId.setText(String.valueOf(position + 1));
                 myViewHolder.mItemName.setText(mData.get(position));
             }
         }
@@ -276,8 +277,8 @@ public class SendFragment extends Fragment implements SendContract.View {
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            public TextView mItemId;
-            public TextView mItemName;
+            public final TextView mItemId;
+            public final TextView mItemName;
 
             public MyViewHolder(View view) {
                 super(view);

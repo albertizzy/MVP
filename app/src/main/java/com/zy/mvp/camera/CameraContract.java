@@ -2,7 +2,7 @@ package com.zy.mvp.camera;
 
 import java.util.List;
 
-public interface CameraContract {
+interface CameraContract {
     interface View {
         void showProgress();
 

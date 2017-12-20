@@ -19,9 +19,9 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class SendPresenter implements SendContract.Presenter {
-    private SendContract.View mListView;
-    private Handler handler;
-    private CompositeDisposable mCompositeDisposable;
+    private final SendContract.View mListView;
+    private final Handler handler;
+    private final CompositeDisposable mCompositeDisposable;
 
     public SendPresenter(SendContract.View listView) {
         this.mListView = listView;

@@ -3,6 +3,7 @@ package com.zy.mvp.camera;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -58,7 +59,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_camera, container, false);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe);
@@ -92,7 +93,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
         }
     }
 
-    private CameraRecyclerViewAdapter.OnItemClickListener mOnItemClickListener = new CameraRecyclerViewAdapter.OnItemClickListener() {
+    private final CameraRecyclerViewAdapter.OnItemClickListener mOnItemClickListener = new CameraRecyclerViewAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
 //                Toast.makeText(context, holder.getLayoutPosition() + " Camera", Toast.LENGTH_SHORT).show();
@@ -112,7 +113,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
         }
     };
 
-    private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+    private final SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
             if (getUserVisibleHint()) {
@@ -125,7 +126,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
             }
         }
     };
-    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
+    private final RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
         private int lastVisibleItem;
 
         @Override
@@ -211,7 +212,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
         private static final int TYPE_ITEM = 0;
         private static final int TYPE_FOOTER = 1;
         private boolean mShowFooter = false;
-        private LayoutInflater mLayoutInflater;
+        private final LayoutInflater mLayoutInflater;
 
         public CameraRecyclerViewAdapter(Context context) {
             this.context = context;
@@ -267,7 +268,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
             if (holder instanceof MyViewHolder) {
                 final MyViewHolder myViewHolder = (MyViewHolder) holder;
-                myViewHolder.mItemId.setText((position + 1) + "");
+                myViewHolder.mItemId.setText(String.valueOf(position + 1));
                 myViewHolder.mItemName.setText(mData.get(position));
             }
         }
@@ -296,8 +297,8 @@ public class CameraFragment extends Fragment implements CameraContract.View {
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            public TextView mItemId;
-            public TextView mItemName;
+            public final TextView mItemId;
+            public final TextView mItemName;
 
             public MyViewHolder(View view) {
                 super(view);

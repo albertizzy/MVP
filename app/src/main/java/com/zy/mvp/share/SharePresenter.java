@@ -19,9 +19,9 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class SharePresenter implements ShareContract.Presenter {
-    private ShareContract.View mListView;
-    private Handler handler;
-    private CompositeDisposable mCompositeDisposable;
+    private final ShareContract.View mListView;
+    private final Handler handler;
+    private final CompositeDisposable mCompositeDisposable;
 
     public SharePresenter(ShareContract.View listView) {
         this.mListView = listView;

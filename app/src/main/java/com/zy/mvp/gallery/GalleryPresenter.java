@@ -19,9 +19,9 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class GalleryPresenter implements GalleryContract.Presenter {
-    private GalleryContract.View mListView;
-    private Handler handler;
-    private CompositeDisposable mCompositeDisposable;
+    private final GalleryContract.View mListView;
+    private final Handler handler;
+    private final CompositeDisposable mCompositeDisposable;
 
     public GalleryPresenter(GalleryContract.View listView) {
         this.mListView = listView;

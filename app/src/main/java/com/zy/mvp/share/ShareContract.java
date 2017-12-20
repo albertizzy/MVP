@@ -2,7 +2,7 @@ package com.zy.mvp.share;
 
 import java.util.List;
 
-public interface ShareContract {
+interface ShareContract {
     interface View {
         void showProgress();
 

@@ -1,6 +1,6 @@
 package com.zy.mvp.main;
 
-public interface MainContract {
+interface MainContract {
     interface View {
         void switch2Camera(int id);
 

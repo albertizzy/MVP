@@ -1,6 +1,7 @@
 package com.zy.mvp.tab;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -18,22 +19,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TabFragment extends Fragment {
-    private TabLayout mTablayout;
+    private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab, null);
-        mTablayout = view.findViewById(R.id.tab_layout);
+        mTabLayout = view.findViewById(R.id.tab_layout);
         mViewPager = view.findViewById(R.id.viewpager);
         mViewPager.setOffscreenPageLimit(3);
         setupViewPager(mViewPager);
-        mTablayout.addTab(mTablayout.newTab().setText("一"));
-        mTablayout.addTab(mTablayout.newTab().setText("二"));
-        mTablayout.addTab(mTablayout.newTab().setText("三"));
-        mTablayout.addTab(mTablayout.newTab().setText("四"));
-        mTablayout.setupWithViewPager(mViewPager);
+        mTabLayout.addTab(mTabLayout.newTab().setText("一"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("二"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("三"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("四"));
+        mTabLayout.setupWithViewPager(mViewPager);
         return view;
     }
 
@@ -48,8 +49,8 @@ public class TabFragment extends Fragment {
     }
 
     private static class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-        private List<Fragment> mFragments = new ArrayList<>();
-        private List<String> mFragmentTitles = new ArrayList<>();
+        private final List<Fragment> mFragments = new ArrayList<>();
+        private final List<String> mFragmentTitles = new ArrayList<>();
 
         public MyFragmentPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);

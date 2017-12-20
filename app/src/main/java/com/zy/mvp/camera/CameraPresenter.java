@@ -19,9 +19,9 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class CameraPresenter implements CameraContract.Presenter {
-    private CameraContract.View mListView;
-    private Handler handler;
-    private CompositeDisposable mCompositeDisposable;
+    private final CameraContract.View mListView;
+    private final Handler handler;
+    private final CompositeDisposable mCompositeDisposable;
 
     public CameraPresenter(CameraContract.View listView) {
         this.mListView = listView;
