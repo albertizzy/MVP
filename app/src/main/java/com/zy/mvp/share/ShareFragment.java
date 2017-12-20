@@ -191,9 +191,11 @@ public class ShareFragment extends Fragment implements ShareContract.View {
         private static final int TYPE_ITEM = 0;
         private static final int TYPE_FOOTER = 1;
         private boolean mShowFooter = false;
+        private LayoutInflater mLayoutInflater;
 
         public ShareRecyclerViewAdapter(Context context) {
             this.context = context;
+            this.mLayoutInflater = LayoutInflater.from(context);
         }
 
         public void setmData(List<String> mData) {
@@ -217,8 +219,7 @@ public class ShareFragment extends Fragment implements ShareContract.View {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             if (viewType == TYPE_ITEM) {
-                View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.recycler_item, parent, false);
+                View view = mLayoutInflater.inflate(R.layout.recycler_item, parent, false);
                 final MyViewHolder myViewHolder = new MyViewHolder(view);
                 myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -235,8 +236,7 @@ public class ShareFragment extends Fragment implements ShareContract.View {
 //            });
                 return myViewHolder;
             } else {
-                View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.fragment_footer, null);
+                View view = mLayoutInflater.inflate(R.layout.fragment_footer, null);
                 view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
                 return new FooterViewHolder(view);
