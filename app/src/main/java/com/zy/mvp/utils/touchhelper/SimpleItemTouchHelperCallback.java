@@ -76,7 +76,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
      */
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        //onItemDissmiss是接口方法
-        mAdapter.onItemDissmiss(viewHolder.getAdapterPosition());
+        //onItemDismiss是接口方法
+        mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
     }
 }

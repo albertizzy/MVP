@@ -16,6 +16,6 @@ interface GalleryContract {
     interface Presenter {
         void loadData(String token, int page);
 
-        void unsubscribe();
+        void unSubscribe();
     }
 }

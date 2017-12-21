@@ -25,7 +25,7 @@ import java.util.List;
 
 public class GalleryFragment extends Fragment implements GalleryContract.View {
     private static final String TOKEN = "token";
-    private static final String ISSHOWFOOTER = "isShowFooter";
+    private static final String IS_SHOW_FOOTER = "isShowFooter";
     private String token;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private GalleryRecyclerViewAdapter mAdapter;
@@ -33,7 +33,6 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
     private int pageIndex = 1;
     private boolean isShowFooter = false;
     private List<String> mData;
-    private RecyclerView mRecyclerView;
     public static final int PAGE_SIZE = 20;
     private GalleryContract.Presenter mListPresenter;
 
@@ -41,7 +40,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         GalleryFragment fragment = new GalleryFragment();
         Bundle bundle = new Bundle();
         bundle.putString(TOKEN, token);
-        bundle.putBoolean(ISSHOWFOOTER, isShowFooter);
+        bundle.putBoolean(IS_SHOW_FOOTER, isShowFooter);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -51,7 +50,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             token = getArguments().getString(TOKEN);
-            isShowFooter = getArguments().getBoolean(ISSHOWFOOTER);
+            isShowFooter = getArguments().getBoolean(IS_SHOW_FOOTER);
         }
         mListPresenter = new GalleryPresenter(this);
         mAdapter = new GalleryRecyclerViewAdapter(getContext());
@@ -64,7 +63,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe);
         mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
-        mRecyclerView = view.findViewById(R.id.recycler);
+        RecyclerView mRecyclerView = view.findViewById(R.id.recycler);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(view.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -74,7 +73,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         mOnRefreshListener.onRefresh();
         //先实例化Callback
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
-        //用Callback构造ItemtouchHelper
+        //用Callback构造ItemTouchHelper
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         //调用ItemTouchHelper的attachToRecyclerView方法建立联系
         touchHelper.attachToRecyclerView(mRecyclerView);
@@ -183,7 +182,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
     @Override
     public void onPause() {
         super.onPause();
-        mListPresenter.unsubscribe();
+        mListPresenter.unSubscribe();
     }
 
     private static class GalleryRecyclerViewAdapter extends RecyclerView.Adapter<GalleryRecyclerViewAdapter.MyViewHolder> implements ItemTouchHelperAdapter {
@@ -308,7 +307,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
 //    }
 
         @Override
-        public void onItemDissmiss(int position) {
+        public void onItemDismiss(int position) {
             mData.remove(position);
             notifyItemRemoved(position);
         }

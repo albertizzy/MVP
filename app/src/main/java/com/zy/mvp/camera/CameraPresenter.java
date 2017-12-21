@@ -126,7 +126,7 @@ public class CameraPresenter implements CameraContract.Presenter {
     }
 
     @Override
-    public void unsubscribe() {
+    public void unSubscribe() {
         mCompositeDisposable.clear();
     }
 }

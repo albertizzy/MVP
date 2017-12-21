@@ -14,7 +14,6 @@ public class DetailActivity extends SwipeBackActivity implements DetailView {
 //    private HtmlTextView mTVNewsContent;
 //    private NewsDetailPresenter mNewsDetailPresenter;
     private ProgressBar mProgressBar;
-    private SwipeBackLayout mSwipeBackLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,7 @@ public class DetailActivity extends SwipeBackActivity implements DetailView {
 //                onBackPressed();
 //            }
 //        });
-        mSwipeBackLayout = getSwipeBackLayout();
+        SwipeBackLayout mSwipeBackLayout = getSwipeBackLayout();
         mSwipeBackLayout.setEdgeSize(ToolsUtil.getWidthInPx(this));
         mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
 //        mNews = (NewsBean) getIntent().getSerializableExtra("news");
@@ -43,7 +42,7 @@ public class DetailActivity extends SwipeBackActivity implements DetailView {
     }
 
     @Override
-    public void showDetialContent(String detailContent) {
+    public void showDetailContent(String detailContent) {
 //        mTVNewsContent.setHtmlFromString(detailContent, new HtmlTextView.LocalImageGetter());
     }
 

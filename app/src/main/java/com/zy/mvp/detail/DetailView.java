@@ -1,7 +1,7 @@
 package com.zy.mvp.detail;
 
 interface DetailView {
-    void showDetialContent(String detailContent);
+    void showDetailContent(String detailContent);
 
     void showProgress();
 

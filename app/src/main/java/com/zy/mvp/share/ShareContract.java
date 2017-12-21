@@ -16,6 +16,6 @@ interface ShareContract {
     interface Presenter {
         void loadData(String token, int page);
 
-        void unsubscribe();
+        void unSubscribe();
     }
 }

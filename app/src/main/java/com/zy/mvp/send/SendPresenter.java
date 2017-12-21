@@ -126,7 +126,7 @@ public class SendPresenter implements SendContract.Presenter {
     }
 
     @Override
-    public void unsubscribe() {
+    public void unSubscribe() {
         mCompositeDisposable.clear();
     }
 }

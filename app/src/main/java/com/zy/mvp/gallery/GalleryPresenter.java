@@ -126,7 +126,7 @@ public class GalleryPresenter implements GalleryContract.Presenter {
     }
 
     @Override
-    public void unsubscribe() {
+    public void unSubscribe() {
         mCompositeDisposable.clear();
     }
 }

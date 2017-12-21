@@ -14,5 +14,5 @@ public interface ItemTouchHelperAdapter {
      *
      * @param position
      */
-    void onItemDissmiss(int position);
+    void onItemDismiss(int position);
 }

@@ -19,15 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TabFragment extends Fragment {
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab, null);
-        mTabLayout = view.findViewById(R.id.tab_layout);
-        mViewPager = view.findViewById(R.id.viewpager);
+        TabLayout mTabLayout = view.findViewById(R.id.tab_layout);
+        ViewPager mViewPager = view.findViewById(R.id.viewpager);
         mViewPager.setOffscreenPageLimit(3);
         setupViewPager(mViewPager);
         mTabLayout.addTab(mTabLayout.newTab().setText("一"));

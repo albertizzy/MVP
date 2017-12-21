@@ -126,7 +126,7 @@ public class SharePresenter implements ShareContract.Presenter {
     }
 
     @Override
-    public void unsubscribe() {
+    public void unSubscribe() {
         mCompositeDisposable.clear();
     }
 }
