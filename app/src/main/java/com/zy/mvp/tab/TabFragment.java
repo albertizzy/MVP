@@ -19,6 +19,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TabFragment extends Fragment {
+    private CameraFragment fragment1;
+    private CameraFragment fragment2;
+    private CameraFragment fragment3;
+    private CameraFragment fragment4;
+
+    public static TabFragment newInstance() {
+        TabFragment fragment = new TabFragment();
+        Bundle bundle = new Bundle();
+//        bundle.putString("xxx", "xxx");
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -39,10 +51,22 @@ public class TabFragment extends Fragment {
     private void setupViewPager(ViewPager mViewPager) {
         //Fragment中嵌套使用Fragment一定要使用getChildFragmentManager(),否则会有问题
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(CameraFragment.newInstance("", true), "一");
-        adapter.addFragment(CameraFragment.newInstance("", true), "二");
-        adapter.addFragment(CameraFragment.newInstance("", true), "三");
-        adapter.addFragment(CameraFragment.newInstance("", true), "四");
+        if (fragment1 == null) {
+            fragment1 = CameraFragment.newInstance("", true);
+        }
+        if (fragment2 == null) {
+            fragment2 = CameraFragment.newInstance("", true);
+        }
+        if (fragment3 == null) {
+            fragment3 = CameraFragment.newInstance("", true);
+        }
+        if (fragment4 == null) {
+            fragment4 = CameraFragment.newInstance("", true);
+        }
+        adapter.addFragment(fragment1, "一");
+        adapter.addFragment(fragment2, "二");
+        adapter.addFragment(fragment3, "三");
+        adapter.addFragment(fragment4, "四");
         mViewPager.setAdapter(adapter);
     }
 

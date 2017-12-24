@@ -22,6 +22,10 @@ public class MainActivity extends AppCompatActivity
     private MainContract.Presenter mMainPresenter;
     private Toolbar toolbar;
     private DrawerLayout drawer;
+    private TabFragment tabFragment;
+    private GalleryFragment galleryFragment;
+    private ShareFragment shareFragment;
+    private SendFragment sendFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,25 +97,37 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void switch2Camera(int id) {
 //        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, CameraFragment.newInstance("", true)).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, new TabFragment()).commit();
+        if (tabFragment == null) {
+            tabFragment = TabFragment.newInstance();
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, tabFragment).commit();
         toolbar.setTitle("Camera");
     }
 
     @Override
     public void switch2Gallery(int id) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, GalleryFragment.newInstance("", true)).commit();
+        if (galleryFragment == null) {
+            galleryFragment = GalleryFragment.newInstance("", true);
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, galleryFragment).commit();
         toolbar.setTitle("Gallery");
     }
 
     @Override
     public void switch2Share(int id) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, ShareFragment.newInstance("", true)).commit();
+        if (shareFragment == null) {
+            shareFragment = ShareFragment.newInstance("", true);
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, shareFragment).commit();
         toolbar.setTitle("Share");
     }
 
     @Override
     public void switch2Send(int id) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, SendFragment.newInstance("", true)).commit();
+        if (sendFragment == null) {
+            sendFragment = SendFragment.newInstance("", true);
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, sendFragment).commit();
         toolbar.setTitle("Send");
     }
 
