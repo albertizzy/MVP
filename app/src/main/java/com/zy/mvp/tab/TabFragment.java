@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TabFragment extends Fragment {
+    private static final String TAG = "TabFragment";
     private CameraFragment fragment1;
     private CameraFragment fragment2;
     private CameraFragment fragment3;
@@ -32,9 +34,16 @@ public class TabFragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.e(TAG, "onCreate");
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.e(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.tab, null);
         TabLayout mTabLayout = view.findViewById(R.id.tab_layout);
         ViewPager mViewPager = view.findViewById(R.id.viewpager);
