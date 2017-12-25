@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GalleryFragment extends Fragment implements GalleryContract.View {
+    private static final String TAG = "GalleryFragment";
     private static final String TOKEN = "token";
     private String token;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -46,6 +48,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e(TAG, "onCreate");
         if (getArguments() != null) {
             token = getArguments().getString(TOKEN);
         }
@@ -57,6 +60,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.e(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe);
         mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
