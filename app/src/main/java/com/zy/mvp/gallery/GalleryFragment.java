@@ -33,7 +33,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
     private LinearLayoutManager mLayoutManager;
     private int pageIndex = 1;
     private boolean isShowFooter = false;
-    private List<String> mData;
+    private ArrayList<String> mData;
     public static final int PAGE_SIZE = 20;
     private GalleryContract.Presenter mListPresenter;
 
@@ -71,7 +71,6 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(mOnScrollListener);
-        mOnRefreshListener.onRefresh();
         //先实例化Callback
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
         //用Callback构造ItemTouchHelper
@@ -81,7 +80,23 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         //通过onCreateOptionsMenu()，fragment可以为activity的Options Menu提供菜单项。
         // 为了确保这一方法成功实现回调。必须在onCreate()期间调用setHasOptionsMenu()告知Options Menu fragment要添加菜单项。
         setHasOptionsMenu(true);
+        if (savedInstanceState == null) {
+            mOnRefreshListener.onRefresh();
+        } else {//屏幕旋转
+            isShowFooter = savedInstanceState.getBoolean("isShowFooter");
+            mData = savedInstanceState.getStringArrayList("mData");
+            pageIndex = savedInstanceState.getInt("pageIndex");
+            addData(mData);
+        }
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("isShowFooter", isShowFooter);
+        outState.putStringArrayList("mData", mData);
+        outState.putInt("pageIndex", pageIndex);
     }
 
     private final GalleryRecyclerViewAdapter.OnItemClickListener mOnItemClickListener = new GalleryRecyclerViewAdapter.OnItemClickListener() {
