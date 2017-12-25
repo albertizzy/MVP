@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         mMainPresenter = new MainPresenter(this);
         navigationView.setCheckedItem(R.id.nav_camera);
-        if (savedInstanceState == null) {//屏幕旋转
+        if (savedInstanceState == null) {
             switch2Camera(R.id.nav_camera);
-        } else {
+        } else {//屏幕旋转
             toolbar.setTitle(savedInstanceState.getString("title"));
         }
     }
