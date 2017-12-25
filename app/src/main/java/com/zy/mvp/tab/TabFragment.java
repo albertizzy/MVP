@@ -26,9 +26,9 @@ public class TabFragment extends Fragment {
 
     public static TabFragment newInstance() {
         TabFragment fragment = new TabFragment();
-        Bundle bundle = new Bundle();
+//        Bundle bundle = new Bundle();
 //        bundle.putString("xxx", "xxx");
-        fragment.setArguments(bundle);
+//        fragment.setArguments(bundle);
         return fragment;
     }
 
