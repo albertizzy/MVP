@@ -185,7 +185,7 @@ public class SendFragment extends Fragment implements SendContract.View {
         mListPresenter.unSubscribe();
     }
 
-    private static class SendRecyclerViewAdapter extends RecyclerView.Adapter<SendRecyclerViewAdapter.MyViewHolder> implements ItemTouchHelperAdapter {
+    private static class SendRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
         private List<String> mData;
         private final Context context;
         private static final int TYPE_ITEM = 0;
@@ -217,7 +217,7 @@ public class SendFragment extends Fragment implements SendContract.View {
         }
 
         @Override
-        public SendRecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             if (viewType == TYPE_ITEM) {
                 View view = mLayoutInflater.inflate(R.layout.recycler_item, parent, false);
                 final MyViewHolder myViewHolder = new MyViewHolder(view);
@@ -244,9 +244,12 @@ public class SendFragment extends Fragment implements SendContract.View {
         }
 
         @Override
-        public void onBindViewHolder(final SendRecyclerViewAdapter.MyViewHolder holder, final int position) {
-            holder.mItemId.setText(String.valueOf(position + 1));
-            holder.mItemName.setText(mData.get(position));
+        public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+            if (holder instanceof SendRecyclerViewAdapter.MyViewHolder) {
+                SendRecyclerViewAdapter.MyViewHolder myViewHolder = (SendRecyclerViewAdapter.MyViewHolder) holder;
+                myViewHolder.mItemId.setText(String.valueOf(position + 1));
+                myViewHolder.mItemName.setText(mData.get(position));
+            }
         }
 
         @Override
@@ -266,7 +269,7 @@ public class SendFragment extends Fragment implements SendContract.View {
             return this.mShowFooter;
         }
 
-        public class FooterViewHolder extends SendRecyclerViewAdapter.MyViewHolder {
+        public class FooterViewHolder extends RecyclerView.ViewHolder {
             public FooterViewHolder(View view) {
                 super(view);
             }
