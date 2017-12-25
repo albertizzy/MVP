@@ -80,6 +80,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
             isShowFooter = savedInstanceState.getBoolean("isShowFooter");
             mData = savedInstanceState.getStringArrayList("mData");
             pageIndex = savedInstanceState.getInt("pageIndex");
+            isFirstVisibleToUser = savedInstanceState.getBoolean("isFirstVisibleToUser");
             addData(mData);
         }
         return view;
@@ -91,6 +92,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
         outState.putBoolean("isShowFooter", isShowFooter);
         outState.putStringArrayList("mData", mData);
         outState.putInt("pageIndex", pageIndex);
+        outState.putBoolean("isFirstVisibleToUser", isFirstVisibleToUser);
     }
 
     /**
