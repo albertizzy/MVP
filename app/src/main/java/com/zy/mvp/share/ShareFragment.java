@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShareFragment extends Fragment implements ShareContract.View {
+    private static final String TAG = "ShareFragment";
     private static final String TOKEN = "token";
     private String token;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -31,7 +33,7 @@ public class ShareFragment extends Fragment implements ShareContract.View {
     private LinearLayoutManager mLayoutManager;
     private int pageIndex = 1;
     private boolean isShowFooter = false;
-    private List<String> mData;
+    private ArrayList<String> mData;
     public static final int PAGE_SIZE = 20;
     private ShareContract.Presenter mListPresenter;
 
@@ -46,6 +48,7 @@ public class ShareFragment extends Fragment implements ShareContract.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e(TAG, "onCreate");
         if (getArguments() != null) {
             token = getArguments().getString(TOKEN);
         }
@@ -57,6 +60,7 @@ public class ShareFragment extends Fragment implements ShareContract.View {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.e(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_share, container, false);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe);
         mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
@@ -67,7 +71,6 @@ public class ShareFragment extends Fragment implements ShareContract.View {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(mOnScrollListener);
-        mOnRefreshListener.onRefresh();
         //先实例化Callback
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
         //用Callback构造ItemTouchHelper
@@ -77,7 +80,23 @@ public class ShareFragment extends Fragment implements ShareContract.View {
         //通过onCreateOptionsMenu()，fragment可以为activity的Options Menu提供菜单项。
         // 为了确保这一方法成功实现回调。必须在onCreate()期间调用setHasOptionsMenu()告知Options Menu fragment要添加菜单项。
         setHasOptionsMenu(true);
+        if (savedInstanceState == null) {
+            mOnRefreshListener.onRefresh();
+        } else {//屏幕旋转
+            isShowFooter = savedInstanceState.getBoolean("isShowFooter");
+            mData = savedInstanceState.getStringArrayList("mData");
+            pageIndex = savedInstanceState.getInt("pageIndex");
+            addData(mData);
+        }
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("isShowFooter", isShowFooter);
+        outState.putStringArrayList("mData", mData);
+        outState.putInt("pageIndex", pageIndex);
     }
 
     private final ShareRecyclerViewAdapter.OnItemClickListener mOnItemClickListener = new ShareRecyclerViewAdapter.OnItemClickListener() {
@@ -178,6 +197,7 @@ public class ShareFragment extends Fragment implements ShareContract.View {
     @Override
     public void onPause() {
         super.onPause();
+        Log.e(TAG, "onPause");
         mListPresenter.unSubscribe();
     }
 

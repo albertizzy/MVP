@@ -197,6 +197,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
     @Override
     public void onPause() {
         super.onPause();
+        Log.e(TAG, "onPause");
         mListPresenter.unSubscribe();
     }
 
