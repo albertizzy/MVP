@@ -107,7 +107,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void switch2Gallery(int id) {
         if (galleryFragment == null) {
-            galleryFragment = GalleryFragment.newInstance("", true);
+            galleryFragment = GalleryFragment.newInstance("");
+            galleryFragment.isShowFooter(true);
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.content_main, galleryFragment).commit();
         toolbar.setTitle("Gallery");
@@ -116,7 +117,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void switch2Share(int id) {
         if (shareFragment == null) {
-            shareFragment = ShareFragment.newInstance("", true);
+            shareFragment = ShareFragment.newInstance("");
+            shareFragment.isShowFooter(true);
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.content_main, shareFragment).commit();
         toolbar.setTitle("Share");
@@ -125,10 +127,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void switch2Send(int id) {
         if (sendFragment == null) {
-            sendFragment = SendFragment.newInstance("", true);
+            sendFragment = SendFragment.newInstance("");
+            sendFragment.isShowFooter(true);
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.content_main, sendFragment).commit();
         toolbar.setTitle("Send");
     }
-
 }

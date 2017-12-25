@@ -25,7 +25,6 @@ import java.util.List;
 
 public class GalleryFragment extends Fragment implements GalleryContract.View {
     private static final String TOKEN = "token";
-    private static final String IS_SHOW_FOOTER = "isShowFooter";
     private String token;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private GalleryRecyclerViewAdapter mAdapter;
@@ -36,11 +35,10 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
     public static final int PAGE_SIZE = 20;
     private GalleryContract.Presenter mListPresenter;
 
-    public static GalleryFragment newInstance(String token, boolean isShowFooter) {
+    public static GalleryFragment newInstance(String token) {
         GalleryFragment fragment = new GalleryFragment();
         Bundle bundle = new Bundle();
         bundle.putString(TOKEN, token);
-        bundle.putBoolean(IS_SHOW_FOOTER, isShowFooter);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -50,7 +48,6 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             token = getArguments().getString(TOKEN);
-            isShowFooter = getArguments().getBoolean(IS_SHOW_FOOTER);
         }
         mListPresenter = new GalleryPresenter(this);
         mAdapter = new GalleryRecyclerViewAdapter(getContext());
@@ -88,7 +85,6 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         public void onItemClick(View view, int position) {
             Snackbar.make(view, position + " Gallery", Snackbar.LENGTH_SHORT).show();
         }
-
 //            @Override
 //            public void onItemLongClick(View view, int position) {
 //                mData.remove(position);
@@ -183,6 +179,10 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
     public void onPause() {
         super.onPause();
         mListPresenter.unSubscribe();
+    }
+
+    public void isShowFooter(boolean showFooter) {
+        isShowFooter = showFooter;
     }
 
     private static class GalleryRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
@@ -293,7 +293,6 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
 
         public interface OnItemClickListener {
             void onItemClick(View view, int position);
-
 //        void onItemLongClick(View view, int position);
         }
 
@@ -303,12 +302,11 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
             this.mOnItemClickListener = mOnItemClickListener;
         }
 
-//    @Override
+        //    @Override
 //    public void onItemMove(int fromPosition, int toPosition) {
 //        Collections.swap(mData, fromPosition, toPosition);
 //        notifyItemMoved(fromPosition, toPosition);
 //    }
-
         @Override
         public void onItemDismiss(int position) {
             mData.remove(position);

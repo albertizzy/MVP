@@ -24,7 +24,6 @@ import java.util.List;
 
 public class CameraFragment extends Fragment implements CameraContract.View {
     private static final String TOKEN = "token";
-    private static final String IS_SHOW_FOOTER = "isShowFooter";
     private String token;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private CameraRecyclerViewAdapter mAdapter;
@@ -36,11 +35,10 @@ public class CameraFragment extends Fragment implements CameraContract.View {
     private CameraContract.Presenter mListPresenter;
     private boolean isFirstVisibleToUser = true;
 
-    public static CameraFragment newInstance(String token, boolean isShowFooter) {
+    public static CameraFragment newInstance(String token) {
         CameraFragment fragment = new CameraFragment();
         Bundle bundle = new Bundle();
         bundle.putString(TOKEN, token);
-        bundle.putBoolean(IS_SHOW_FOOTER, isShowFooter);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -50,7 +48,6 @@ public class CameraFragment extends Fragment implements CameraContract.View {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             token = getArguments().getString(TOKEN);
-            isShowFooter = getArguments().getBoolean(IS_SHOW_FOOTER);
         }
         mListPresenter = new CameraPresenter(this);
         mAdapter = new CameraRecyclerViewAdapter(getContext());
@@ -111,7 +108,6 @@ public class CameraFragment extends Fragment implements CameraContract.View {
             mAdapter.notifyItemRemoved(position);
         }
     };
-
     private final SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
@@ -203,6 +199,10 @@ public class CameraFragment extends Fragment implements CameraContract.View {
     public void onPause() {
         super.onPause();
         mListPresenter.unSubscribe();
+    }
+
+    public void isShowFooter(boolean showFooter) {
+        isShowFooter = showFooter;
     }
 
     private static class CameraRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
