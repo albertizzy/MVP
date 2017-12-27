@@ -266,7 +266,7 @@ public class SendFragment extends Fragment implements SendContract.View {
         private boolean mShowFooter = false;
         private final LayoutInflater mLayoutInflater;
 
-        public SendRecyclerViewAdapter(Context context) {
+        private SendRecyclerViewAdapter(Context context) {
             this.context = context;
             this.mLayoutInflater = LayoutInflater.from(context);
         }
@@ -334,25 +334,25 @@ public class SendFragment extends Fragment implements SendContract.View {
             return data.size() + begin;
         }
 
-        public void isShowFooter(boolean showFooter) {
+        private void isShowFooter(boolean showFooter) {
             this.mShowFooter = showFooter;
         }
 
-        public boolean isShowFooter() {
+        private boolean isShowFooter() {
             return this.mShowFooter;
         }
 
-        public class FooterViewHolder extends RecyclerView.ViewHolder {
-            public FooterViewHolder(View view) {
+        private class FooterViewHolder extends RecyclerView.ViewHolder {
+            private FooterViewHolder(View view) {
                 super(view);
             }
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            public final TextView mItemId;
-            public final TextView mItemName;
+            private final TextView mItemId;
+            private final TextView mItemName;
 
-            public MyViewHolder(View view) {
+            private MyViewHolder(View view) {
                 super(view);
                 mItemId = view.findViewById(R.id.itemid);
                 mItemName = view.findViewById(R.id.itemname);
@@ -371,7 +371,7 @@ public class SendFragment extends Fragment implements SendContract.View {
 
         private OnItemClickListener mOnItemClickListener;
 
-        public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+        private void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
             this.mOnItemClickListener = mOnItemClickListener;
         }
 
