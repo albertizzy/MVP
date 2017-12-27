@@ -33,7 +33,7 @@ public class ShareFragment extends Fragment implements ShareContract.View {
     private ShareRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private int pageIndex = 1;
-    private boolean isShowFooter = false;
+    private boolean isShowFooter;
     private ArrayList<String> data;
     public static final int PAGE_SIZE = 20;
     private ShareContract.Presenter mListPresenter;

@@ -33,7 +33,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
     private GalleryRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private int pageIndex = 1;
-    private boolean isShowFooter = false;
+    private boolean isShowFooter;
     private ArrayList<String> data;
     public static final int PAGE_SIZE = 20;
     private GalleryContract.Presenter mListPresenter;
