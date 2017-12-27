@@ -6,7 +6,7 @@ interface SendContract {
     interface View {
         void showProgress();
 
-        void addData(List<String> mData);
+        void addData(List<String> data);
 
         void hideProgress();
 

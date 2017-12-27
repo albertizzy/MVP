@@ -33,7 +33,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
     private LinearLayoutManager mLayoutManager;
     private int pageIndex = 1;
     private boolean isShowFooter = false;
-    private ArrayList<String> mData;
+    private ArrayList<String> data;
     public static final int PAGE_SIZE = 20;
     private CameraContract.Presenter mListPresenter;
     private boolean isFirstVisibleToUser = true;
@@ -86,10 +86,10 @@ public class CameraFragment extends Fragment implements CameraContract.View {
             mOnRefreshListener.onRefresh();
         } else {//屏幕旋转
             isShowFooter = savedInstanceState.getBoolean("isShowFooter");
-            mData = savedInstanceState.getStringArrayList("mData");
+            data = savedInstanceState.getStringArrayList("data");
             pageIndex = savedInstanceState.getInt("pageIndex");
             isFirstVisibleToUser = savedInstanceState.getBoolean("isFirstVisibleToUser");
-            addData(mData);
+            addData(data);
         }
         return view;
     }
@@ -150,7 +150,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("isShowFooter", isShowFooter);
-        outState.putStringArrayList("mData", mData);
+        outState.putStringArrayList("data", data);
         outState.putInt("pageIndex", pageIndex);
         outState.putBoolean("isFirstVisibleToUser", isFirstVisibleToUser);
     }
@@ -185,7 +185,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
 
         @Override
         public void onItemLongClick(View view, int position) {
-            mData.remove(position);
+            data.remove(position);
             mAdapter.notifyItemRemoved(position);
         }
     };
@@ -194,8 +194,8 @@ public class CameraFragment extends Fragment implements CameraContract.View {
         public void onRefresh() {
             if (getUserVisibleHint()) {
                 pageIndex = 1;
-                if (mData != null) {
-                    mData.clear();
+                if (data != null) {
+                    data.clear();
                 }
                 mListPresenter.loadData(token, pageIndex);
                 isFirstVisibleToUser = false;
@@ -246,17 +246,17 @@ public class CameraFragment extends Fragment implements CameraContract.View {
             if (dataList.size() < PAGE_SIZE) {
                 mAdapter.isShowFooter(false);
             }
-            if (mData == null) {
-                mData = new ArrayList<>();
+            if (data == null) {
+                data = new ArrayList<>();
             }
-            mData.addAll(dataList);
-            mAdapter.setmData(mData);
+            data.addAll(dataList);
+            mAdapter.setData(data);
             mAdapter.notifyDataSetChanged();
             pageIndex++;
         }
 //        if (pageIndex == 1) {
-//            mAdapter.setmData(mData);
-//            if (mData == null || mData.size() < PAGE_SIZE) {
+//            mAdapter.setData(data);
+//            if (data == null || data.size() < PAGE_SIZE) {
 //                mAdapter.isShowFooter(false);
 //            }
 //        } else {
@@ -281,7 +281,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
     }
 
     private static class CameraRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        private List<String> mData;
+        private List<String> data;
         private final Context context;
         private static final int TYPE_ITEM = 0;
         private static final int TYPE_FOOTER = 1;
@@ -293,8 +293,8 @@ public class CameraFragment extends Fragment implements CameraContract.View {
             this.mLayoutInflater = LayoutInflater.from(context);
         }
 
-        public void setmData(List<String> mData) {
-            this.mData = mData;
+        public void setData(List<String> data) {
+            this.data = data;
             this.notifyDataSetChanged();
         }
 
@@ -343,17 +343,17 @@ public class CameraFragment extends Fragment implements CameraContract.View {
             if (holder instanceof CameraRecyclerViewAdapter.MyViewHolder) {
                 CameraRecyclerViewAdapter.MyViewHolder myViewHolder = (CameraRecyclerViewAdapter.MyViewHolder) holder;
                 myViewHolder.mItemId.setText(String.valueOf(position + 1));
-                myViewHolder.mItemName.setText(mData.get(position));
+                myViewHolder.mItemName.setText(data.get(position));
             }
         }
 
         @Override
         public int getItemCount() {
             int begin = mShowFooter ? 1 : 0;
-            if (mData == null) {
+            if (data == null) {
                 return begin;
             }
-            return mData.size() + begin;
+            return data.size() + begin;
         }
 
         public void isShowFooter(boolean showFooter) {

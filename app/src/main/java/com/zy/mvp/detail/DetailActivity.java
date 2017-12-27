@@ -39,9 +39,9 @@ public class DetailActivity extends SwipeBackActivity implements DetailView {
 //        mNews = (NewsBean) getIntent().getSerializableExtra("news");
 //        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 //        collapsingToolbar.setTitle(mNews.getTitle());
-//        ImageLoaderUtils.display(getApplicationContext(), (ImageView) findViewById(R.id.ivImage), mNews.getImgsrc());
+//        ImageLoaderUtils.display(getApplicationContext(), (ImageView) findViewById(R.id.ivImage), mNews.getImgSrc());
 //        mNewsDetailPresenter = new NewsDetailPresenterImpl(getApplication(), this);
-//        mNewsDetailPresenter.loadNewsDetail(mNews.getDocid());
+//        mNewsDetailPresenter.loadNewsDetail(mNews.getDocId());
     }
 
     @Override

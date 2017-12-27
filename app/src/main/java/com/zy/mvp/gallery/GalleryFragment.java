@@ -34,7 +34,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
     private LinearLayoutManager mLayoutManager;
     private int pageIndex = 1;
     private boolean isShowFooter = false;
-    private ArrayList<String> mData;
+    private ArrayList<String> data;
     public static final int PAGE_SIZE = 20;
     private GalleryContract.Presenter mListPresenter;
 
@@ -92,9 +92,9 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
             mOnRefreshListener.onRefresh();
         } else {//屏幕旋转
             isShowFooter = savedInstanceState.getBoolean("isShowFooter");
-            mData = savedInstanceState.getStringArrayList("mData");
+            data = savedInstanceState.getStringArrayList("data");
             pageIndex = savedInstanceState.getInt("pageIndex");
-            addData(mData);
+            addData(data);
         }
         return view;
     }
@@ -155,7 +155,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("isShowFooter", isShowFooter);
-        outState.putStringArrayList("mData", mData);
+        outState.putStringArrayList("data", data);
         outState.putInt("pageIndex", pageIndex);
     }
 
@@ -166,7 +166,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         }
 //            @Override
 //            public void onItemLongClick(View view, int position) {
-//                mData.remove(position);
+//                data.remove(position);
 //                mAdapter.notifyItemRemoved(position);
 //            }
     };
@@ -174,8 +174,8 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         @Override
         public void onRefresh() {
             pageIndex = 1;
-            if (mData != null) {
-                mData.clear();
+            if (data != null) {
+                data.clear();
             }
             mListPresenter.loadData(token, pageIndex);
         }
@@ -224,17 +224,17 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
             if (dataList.size() < PAGE_SIZE) {
                 mAdapter.isShowFooter(false);
             }
-            if (mData == null) {
-                mData = new ArrayList<>();
+            if (data == null) {
+                data = new ArrayList<>();
             }
-            mData.addAll(dataList);
-            mAdapter.setmData(mData);
+            data.addAll(dataList);
+            mAdapter.setData(data);
             mAdapter.notifyDataSetChanged();
             pageIndex++;
         }
 //        if (pageIndex == 1) {
-//            mAdapter.setmData(mData);
-//            if (mData == null || mData.size() < PAGE_SIZE) {
+//            mAdapter.setData(data);
+//            if (data == null || data.size() < PAGE_SIZE) {
 //                mAdapter.isShowFooter(false);
 //            }
 //        } else {
@@ -259,7 +259,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
     }
 
     private static class GalleryRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
-        private List<String> mData;
+        private List<String> data;
         private final Context context;
         private static final int TYPE_ITEM = 0;
         private static final int TYPE_FOOTER = 1;
@@ -271,8 +271,8 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
             this.mLayoutInflater = LayoutInflater.from(context);
         }
 
-        public void setmData(List<String> mData) {
-            this.mData = mData;
+        public void setData(List<String> data) {
+            this.data = data;
             this.notifyDataSetChanged();
         }
 
@@ -321,17 +321,17 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
             if (holder instanceof GalleryRecyclerViewAdapter.MyViewHolder) {
                 GalleryRecyclerViewAdapter.MyViewHolder myViewHolder = (GalleryRecyclerViewAdapter.MyViewHolder) holder;
                 myViewHolder.mItemId.setText(String.valueOf(position + 1));
-                myViewHolder.mItemName.setText(mData.get(position));
+                myViewHolder.mItemName.setText(data.get(position));
             }
         }
 
         @Override
         public int getItemCount() {
             int begin = mShowFooter ? 1 : 0;
-            if (mData == null) {
+            if (data == null) {
                 return begin;
             }
-            return mData.size() + begin;
+            return data.size() + begin;
         }
 
         public void isShowFooter(boolean showFooter) {
@@ -377,12 +377,12 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
 
         //    @Override
 //    public void onItemMove(int fromPosition, int toPosition) {
-//        Collections.swap(mData, fromPosition, toPosition);
+//        Collections.swap(data, fromPosition, toPosition);
 //        notifyItemMoved(fromPosition, toPosition);
 //    }
         @Override
         public void onItemDismiss(int position) {
-            mData.remove(position);
+            data.remove(position);
             notifyItemRemoved(position);
         }
     }
