@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         mMainPresenter = new MainPresenter(this);
         navigationView.setCheckedItem(R.id.nav_camera);
         if (savedInstanceState == null) {
-            switch2Camera(R.id.nav_camera);
+            switch2Camera( );
         } else {//屏幕旋转
             toolbar.setTitle(savedInstanceState.getString("title"));
         }
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void switch2Camera(int id) {
+    public void switch2Camera( ) {
 //        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, CameraFragment.newInstance("", true)).commit();
         if (tabFragment == null) {
             tabFragment = TabFragment.newInstance();
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void switch2Gallery(int id) {
+    public void switch2Gallery( ) {
         if (galleryFragment == null) {
             galleryFragment = GalleryFragment.newInstance("");
             galleryFragment.isShowFooter(true);
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void switch2Share(int id) {
+    public void switch2Share( ) {
         if (shareFragment == null) {
             shareFragment = ShareFragment.newInstance("");
             shareFragment.isShowFooter(true);
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void switch2Send(int id) {
+    public void switch2Send() {
         if (sendFragment == null) {
             sendFragment = SendFragment.newInstance("");
             sendFragment.isShowFooter(true);

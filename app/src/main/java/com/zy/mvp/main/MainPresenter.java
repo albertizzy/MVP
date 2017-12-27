@@ -13,19 +13,19 @@ public class MainPresenter implements MainContract.Presenter {
     public void switchNavigation(int id) {
         switch (id) {
             case R.id.nav_camera:
-                mMainView.switch2Camera(id);
+                mMainView.switch2Camera();
                 break;
             case R.id.nav_gallery:
-                mMainView.switch2Gallery(id);
+                mMainView.switch2Gallery();
                 break;
             case R.id.nav_share:
-                mMainView.switch2Share(id);
+                mMainView.switch2Share();
                 break;
             case R.id.nav_send:
-                mMainView.switch2Send(id);
+                mMainView.switch2Send();
                 break;
             default:
-                mMainView.switch2Camera(id);
+                mMainView.switch2Camera();
                 break;
         }
     }
