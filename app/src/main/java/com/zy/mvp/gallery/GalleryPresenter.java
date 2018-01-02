@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -44,9 +45,8 @@ public class GalleryPresenter implements GalleryContract.Presenter {
         Observable<List<String>> observable = Observable.create(new ObservableOnSubscribe<List<String>>() {
             @Override
             public void subscribe(ObservableEmitter<List<String>> emitter) throws Exception {
-                Log.e("sleep", "start");
-                Thread.sleep(1000);//FIXME Rxjava模拟延迟加载
-                Log.e("sleep", "end");
+                Log.e("accept", "sleep");
+//                Thread.sleep(1000);//FIXME Rxjava模拟延迟加载
                 List<String> list = new ArrayList<>();
                 for (int i = 0; i < GalleryFragment.PAGE_SIZE; i++) {
                     list.add("item " + (i + 1));
@@ -54,7 +54,7 @@ public class GalleryPresenter implements GalleryContract.Presenter {
                 emitter.onNext(list);
                 emitter.onComplete();
             }
-        });
+        }).delay(1000, TimeUnit.MILLISECONDS);//FIXME Rxjava模拟延迟加载;
         success(observable, page);
     }
 
