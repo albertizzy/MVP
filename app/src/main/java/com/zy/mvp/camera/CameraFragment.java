@@ -335,7 +335,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
             if (getItemViewType(position) == TYPE_ITEM) {
-                CameraRecyclerViewAdapter.MyViewHolder myViewHolder = (CameraRecyclerViewAdapter.MyViewHolder) holder;
+                MyViewHolder myViewHolder = (MyViewHolder) holder;
                 myViewHolder.mItemId.setText(String.valueOf(position + 1));
                 myViewHolder.mItemName.setText(data.get(position));
             }

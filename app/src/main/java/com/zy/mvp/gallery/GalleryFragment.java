@@ -313,7 +313,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
             if (getItemViewType(position) == TYPE_ITEM) {
-                GalleryRecyclerViewAdapter.MyViewHolder myViewHolder = (GalleryRecyclerViewAdapter.MyViewHolder) holder;
+                MyViewHolder myViewHolder = (MyViewHolder) holder;
                 myViewHolder.mItemId.setText(String.valueOf(position + 1));
                 myViewHolder.mItemName.setText(data.get(position));
             }
