@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);//让原始的toolbar的内容不现实，使用setTitle的内容
+            getSupportActionBar().setDisplayShowTitleEnabled(false);//让原始的toolbar使用的app_name的内容不显示，使用setTitle的内容
         }
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
