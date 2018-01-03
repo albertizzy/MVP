@@ -193,9 +193,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
         public void onRefresh() {
             if (getUserVisibleHint()) {
                 pageIndex = 1;
-                if (mAdapter.data != null) {
-                    mAdapter.data.clear();
-                }
+                mAdapter.data.clear();
                 mListPresenter.loadData(token, pageIndex);
                 isFirstVisibleToUser = false;
             }
@@ -251,7 +249,7 @@ public class CameraFragment extends Fragment implements CameraContract.View {
         }
 //        if (pageIndex == 1) {
 //            mAdapter.setData(data);
-//            if (data == null || data.size() < PAGE_SIZE) {
+//            if (mAdapter.data.size() < PAGE_SIZE) {
 //                mAdapter.isShowFooter(false);
 //            }
 //        } else {
@@ -346,9 +344,6 @@ public class CameraFragment extends Fragment implements CameraContract.View {
         @Override
         public int getItemCount() {
             int begin = mShowFooter ? 1 : 0;
-            if (data == null) {
-                return begin;
-            }
             return data.size() + begin;
         }
 
