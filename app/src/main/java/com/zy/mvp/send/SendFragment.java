@@ -34,7 +34,6 @@ public class SendFragment extends Fragment implements SendContract.View {
     private LinearLayoutManager mLayoutManager;
     private int pageIndex = 1;
     private boolean isShowFooter;
-    private ArrayList<String> data;
     public static final int PAGE_SIZE = 20;
     private SendContract.Presenter mListPresenter;
 
@@ -92,9 +91,9 @@ public class SendFragment extends Fragment implements SendContract.View {
             mOnRefreshListener.onRefresh();
         } else {//屏幕旋转
             isShowFooter = savedInstanceState.getBoolean("isShowFooter");
-            data = savedInstanceState.getStringArrayList("data");
+            mAdapter.data = savedInstanceState.getStringArrayList("data");
             pageIndex = savedInstanceState.getInt("pageIndex");
-            addData(data);
+            addData(mAdapter.data);
         }
         return view;
     }
@@ -155,7 +154,7 @@ public class SendFragment extends Fragment implements SendContract.View {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("isShowFooter", isShowFooter);
-        outState.putStringArrayList("data", data);
+        outState.putStringArrayList("data", mAdapter.data);
         outState.putInt("pageIndex", pageIndex);
     }
 
@@ -174,8 +173,8 @@ public class SendFragment extends Fragment implements SendContract.View {
         @Override
         public void onRefresh() {
             pageIndex = 1;
-            if (data != null) {
-                data.clear();
+            if (mAdapter.data != null) {
+                mAdapter.data.clear();
             }
             mListPresenter.loadData(token, pageIndex);
         }
@@ -224,11 +223,7 @@ public class SendFragment extends Fragment implements SendContract.View {
             if (dataList.size() < PAGE_SIZE) {
                 mAdapter.isShowFooter(false);
             }
-            if (data == null) {
-                data = new ArrayList<>();
-            }
-            data.addAll(dataList);
-            mAdapter.setData(data);
+            mAdapter.setData(mAdapter.data);
             mAdapter.notifyDataSetChanged();
             pageIndex++;
         }
@@ -259,7 +254,7 @@ public class SendFragment extends Fragment implements SendContract.View {
     }
 
     private static class SendRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
-        private List<String> data;
+        private ArrayList<String> data;
         private final Context context;
         private static final int TYPE_ITEM = 0;
         private static final int TYPE_FOOTER = 1;
@@ -269,10 +264,11 @@ public class SendFragment extends Fragment implements SendContract.View {
         private SendRecyclerViewAdapter(Context context) {
             this.context = context;
             this.mLayoutInflater = LayoutInflater.from(context);
+            this.data = new ArrayList<>();
         }
 
         public void setData(List<String> data) {
-            this.data = data;
+            this.data.addAll(data);
             this.notifyDataSetChanged();
         }
 
