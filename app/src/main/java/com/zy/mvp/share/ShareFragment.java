@@ -221,12 +221,12 @@ public class ShareFragment extends Fragment implements ShareContract.View {
             if (dataList.size() < PAGE_SIZE) {
                 mAdapter.isShowFooter(false);
             }
-            mAdapter.setData(mAdapter.data);
+            mAdapter.setData(dataList);
             mAdapter.notifyDataSetChanged();
             pageIndex++;
         }
 //        if (pageIndex == 1) {
-//            mAdapter.setData(data);
+//            mAdapter.setData(dataList);
 //            if (mAdapter.data.size() < PAGE_SIZE) {
 //                mAdapter.isShowFooter(false);
 //            }

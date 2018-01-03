@@ -226,7 +226,7 @@ public class GalleryFragment extends Fragment implements GalleryContract.View {
             pageIndex++;
         }
 //        if (pageIndex == 1) {
-//            mAdapter.setData(data);
+//            mAdapter.setData(dataList);
 //            if (mAdapter.data.size() < PAGE_SIZE) {
 //                mAdapter.isShowFooter(false);
 //            }
