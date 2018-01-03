@@ -312,7 +312,7 @@ public class ShareFragment extends Fragment implements ShareContract.View {
 
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-            if (holder instanceof ShareRecyclerViewAdapter.MyViewHolder) {
+            if (getItemViewType(position) == TYPE_ITEM) {
                 ShareRecyclerViewAdapter.MyViewHolder myViewHolder = (ShareRecyclerViewAdapter.MyViewHolder) holder;
                 myViewHolder.mItemId.setText(String.valueOf(position + 1));
                 myViewHolder.mItemName.setText(data.get(position));
