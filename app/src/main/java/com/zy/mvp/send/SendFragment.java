@@ -28,19 +28,20 @@ import java.util.List;
 public class SendFragment extends Fragment implements SendContract.View {
     private static final String TAG = "SendFragment";
     private static final String TOKEN = "token";
+    private static final String IS_SHOW_FOOTER = "isShowFooter";
     private String token;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private SendRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private int pageIndex = 1;
-    private boolean isShowFooter;
     public static final int PAGE_SIZE = 20;
     private SendContract.Presenter mListPresenter;
 
-    public static SendFragment newInstance(String token) {
+    public static SendFragment newInstance(String token, Boolean isShowFooter) {
         SendFragment fragment = new SendFragment();
         Bundle bundle = new Bundle();
         bundle.putString(TOKEN, token);
+        bundle.putBoolean(IS_SHOW_FOOTER, isShowFooter);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -56,11 +57,14 @@ public class SendFragment extends Fragment implements SendContract.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
+        boolean isShowFooter = false;
         if (getArguments() != null) {
             token = getArguments().getString(TOKEN);
+            isShowFooter = getArguments().getBoolean(IS_SHOW_FOOTER);
         }
         mListPresenter = new SendPresenter(this);
         mAdapter = new SendRecyclerViewAdapter(getContext());
+        mAdapter.mShowFooter = isShowFooter;
         mAdapter.setOnItemClickListener(mOnItemClickListener);
     }
 
@@ -90,7 +94,7 @@ public class SendFragment extends Fragment implements SendContract.View {
         if (savedInstanceState == null) {
             mOnRefreshListener.onRefresh();
         } else {//屏幕旋转
-            isShowFooter = savedInstanceState.getBoolean("isShowFooter");
+            mAdapter.mShowFooter = savedInstanceState.getBoolean("isShowFooter");
             mAdapter.data = savedInstanceState.getStringArrayList("data");
             pageIndex = savedInstanceState.getInt("pageIndex");
             addData(mAdapter.data);
@@ -153,7 +157,7 @@ public class SendFragment extends Fragment implements SendContract.View {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("isShowFooter", isShowFooter);
+        outState.putBoolean("isShowFooter", mAdapter.mShowFooter);
         outState.putStringArrayList("data", mAdapter.data);
         outState.putInt("pageIndex", pageIndex);
     }
@@ -185,7 +189,7 @@ public class SendFragment extends Fragment implements SendContract.View {
             super.onScrollStateChanged(recyclerView, newState);
             if (newState == RecyclerView.SCROLL_STATE_IDLE
                     && lastVisibleItem + 1 == mAdapter.getItemCount()
-                    && mAdapter.isShowFooter() && isShowFooter) {
+                    && mAdapter.mShowFooter) {
                 //加载更多
                 mListPresenter.loadData(token, pageIndex);
             }
@@ -210,16 +214,13 @@ public class SendFragment extends Fragment implements SendContract.View {
 
     @Override
     public void addData(final List<String> dataList) {
-        if (isShowFooter) {
-            mAdapter.isShowFooter(true);
-        }
         //如果没有更多数据了,则隐藏footer布局
         if (dataList == null || dataList.isEmpty()) {
-            mAdapter.isShowFooter(false);
+            mAdapter.mShowFooter = false;
         } else {
             //如果数据量小于分页条数了,说明没有数据,则隐藏footer布局
             if (dataList.size() < PAGE_SIZE) {
-                mAdapter.isShowFooter(false);
+                mAdapter.mShowFooter = false;
             }
             mAdapter.setData(dataList);
             mAdapter.notifyDataSetChanged();
@@ -239,16 +240,12 @@ public class SendFragment extends Fragment implements SendContract.View {
     @Override
     public void showLoadFailMsg(final String message) {
         if (pageIndex == 1) {
-            mAdapter.isShowFooter(false);
+            mAdapter.mShowFooter = false;
             mAdapter.notifyDataSetChanged();
         }
 //                View view = getActivity() == null ? mRecyclerView.getRootView() : getActivity().findViewById(R.id.drawer_layout);
 //                Snackbar.make(view, "加载失败！", Snackbar.LENGTH_SHORT).show();
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    public void isShowFooter(boolean showFooter) {
-        isShowFooter = showFooter;
     }
 
     private static class SendRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
@@ -321,16 +318,11 @@ public class SendFragment extends Fragment implements SendContract.View {
 
         @Override
         public int getItemCount() {
-            int begin = mShowFooter ? 1 : 0;
-            return data.size() + begin;
-        }
-
-        private void isShowFooter(boolean showFooter) {
-            this.mShowFooter = showFooter;
-        }
-
-        private boolean isShowFooter() {
-            return this.mShowFooter;
+            if (data.isEmpty()) {//数据empty时，不显示footer
+                return 0;
+            } else {
+                return data.size() + (mShowFooter ? 1 : 0);
+            }
         }
 
         private class FooterViewHolder extends RecyclerView.ViewHolder {

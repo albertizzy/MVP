@@ -121,20 +121,16 @@ public class TabFragment extends Fragment {
         //Fragment中嵌套使用Fragment一定要使用getChildFragmentManager(),否则会有问题
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getChildFragmentManager());
         if (fragment1 == null) {
-            fragment1 = CameraFragment.newInstance("");
-            fragment1.isShowFooter(true);
+            fragment1 = CameraFragment.newInstance("", true);
         }
         if (fragment2 == null) {
-            fragment2 = CameraFragment.newInstance("");
-            fragment2.isShowFooter(true);
+            fragment2 = CameraFragment.newInstance("", true);
         }
         if (fragment3 == null) {
-            fragment3 = CameraFragment.newInstance("");
-            fragment3.isShowFooter(true);
+            fragment3 = CameraFragment.newInstance("", true);
         }
         if (fragment4 == null) {
-            fragment4 = CameraFragment.newInstance("");
-            fragment4.isShowFooter(true);
+            fragment4 = CameraFragment.newInstance("", true);
         }
         adapter.addFragment(fragment1, "一");
         adapter.addFragment(fragment2, "二");
