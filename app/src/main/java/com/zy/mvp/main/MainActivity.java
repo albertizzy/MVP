@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
-        ////Activity快要被销毁了
+        //Activity快要被销毁了
     }
 
     @Override
