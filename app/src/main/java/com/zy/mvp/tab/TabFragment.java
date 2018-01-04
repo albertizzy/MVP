@@ -58,10 +58,6 @@ public class TabFragment extends Fragment {
         ViewPager mViewPager = view.findViewById(R.id.viewpager);
         mViewPager.setOffscreenPageLimit(3);
         setupViewPager(mViewPager);
-        mTabLayout.addTab(mTabLayout.newTab().setText("一"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("二"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("三"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("四"));
         mTabLayout.setupWithViewPager(mViewPager);
         return view;
     }
