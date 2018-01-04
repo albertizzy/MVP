@@ -53,7 +53,7 @@ public class TabFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
         //创建该Fragment的视图
-        View view = inflater.inflate(R.layout.tab, null);
+        View view = inflater.inflate(R.layout.fragment_tab, null);
         TabLayout mTabLayout = view.findViewById(R.id.tab_layout);
         ViewPager mViewPager = view.findViewById(R.id.viewpager);
         mViewPager.setOffscreenPageLimit(3);
