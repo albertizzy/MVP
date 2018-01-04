@@ -57,7 +57,25 @@ public class TabFragment extends Fragment {
         TabLayout mTabLayout = view.findViewById(R.id.tab_layout);
         ViewPager mViewPager = view.findViewById(R.id.viewpager);
         mViewPager.setOffscreenPageLimit(3);
-        setupViewPager(mViewPager);
+        //Fragment中嵌套使用Fragment一定要使用getChildFragmentManager(),否则会有问题
+        MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getChildFragmentManager());
+        if (fragment1 == null) {
+            fragment1 = CameraFragment.newInstance("", true);
+        }
+        if (fragment2 == null) {
+            fragment2 = CameraFragment.newInstance("", true);
+        }
+        if (fragment3 == null) {
+            fragment3 = CameraFragment.newInstance("", true);
+        }
+        if (fragment4 == null) {
+            fragment4 = CameraFragment.newInstance("", true);
+        }
+        adapter.addFragment(fragment1, "一");
+        adapter.addFragment(fragment2, "二");
+        adapter.addFragment(fragment3, "三");
+        adapter.addFragment(fragment4, "四");
+        mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
         return view;
     }
@@ -111,28 +129,6 @@ public class TabFragment extends Fragment {
         super.onDetach();
         Log.d(TAG, "onDetach");
         //与onAttach相对应，当Fragment与Activity关联被取消时调用
-    }
-
-    private void setupViewPager(ViewPager mViewPager) {
-        //Fragment中嵌套使用Fragment一定要使用getChildFragmentManager(),否则会有问题
-        MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getChildFragmentManager());
-        if (fragment1 == null) {
-            fragment1 = CameraFragment.newInstance("", true);
-        }
-        if (fragment2 == null) {
-            fragment2 = CameraFragment.newInstance("", true);
-        }
-        if (fragment3 == null) {
-            fragment3 = CameraFragment.newInstance("", true);
-        }
-        if (fragment4 == null) {
-            fragment4 = CameraFragment.newInstance("", true);
-        }
-        adapter.addFragment(fragment1, "一");
-        adapter.addFragment(fragment2, "二");
-        adapter.addFragment(fragment3, "三");
-        adapter.addFragment(fragment4, "四");
-        mViewPager.setAdapter(adapter);
     }
 
     private static class MyFragmentPagerAdapter extends FragmentPagerAdapter {
