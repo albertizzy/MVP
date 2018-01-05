@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.zy.mvp.R;
-import com.zy.mvp.utils.ToolsUtil;
 
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
@@ -34,7 +33,6 @@ public class DetailActivity extends SwipeBackActivity implements DetailView {
 //            }
 //        });
         SwipeBackLayout mSwipeBackLayout = getSwipeBackLayout();
-        mSwipeBackLayout.setEdgeSize(ToolsUtil.getWidthInPx(this));
         mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
 //        mNews = (NewsBean) getIntent().getSerializableExtra("news");
 //        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
