@@ -322,9 +322,10 @@ public class CameraFragment extends Fragment implements CameraContract.View {
                 });
                 return myViewHolder;
             } else {
-                View view = mLayoutInflater.inflate(R.layout.fragment_footer, null);
-                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
+                View view = mLayoutInflater.inflate(R.layout.fragment_footer, parent, false);
+//                View view = mLayoutInflater.inflate(R.layout.fragment_footer, null);
+//                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT));
                 return new FooterViewHolder(view);
             }
         }
