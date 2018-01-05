@@ -1,4 +1,4 @@
-package com.zy.mvp.utils.touchhelper;
+package com.zy.mvp.touchhelper;
 
 public interface ItemTouchHelperAdapter {
     /**

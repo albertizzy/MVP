@@ -1,4 +1,4 @@
-package com.zy.mvp.utils.touchhelper;
+package com.zy.mvp.touchhelper;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;

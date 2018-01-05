@@ -1,4 +1,4 @@
-package com.zy.mvp.utils;
+package com.zy.mvp.divider;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -18,9 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zy.mvp.R;
-import com.zy.mvp.utils.DividerItemDecoration;
-import com.zy.mvp.utils.touchhelper.ItemTouchHelperAdapter;
-import com.zy.mvp.utils.touchhelper.SimpleItemTouchHelperCallback;
+import com.zy.mvp.divider.DividerItemDecoration;
+import com.zy.mvp.touchhelper.ItemTouchHelperAdapter;
+import com.zy.mvp.touchhelper.SimpleItemTouchHelperCallback;
 
 import java.util.ArrayList;
 import java.util.List;

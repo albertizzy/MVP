@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.zy.mvp.R;
 import com.zy.mvp.detail.DetailActivity;
-import com.zy.mvp.utils.DividerItemDecoration;
+import com.zy.mvp.divider.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
