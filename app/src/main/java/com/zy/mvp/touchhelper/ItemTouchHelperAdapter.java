@@ -1,12 +1,12 @@
 package com.zy.mvp.touchhelper;
 
 public interface ItemTouchHelperAdapter {
-    /**
-     * 数据交换**
-     *
-     * @param fromPosition
-     * @param toPosition
-     */
+//    /**
+//     * 数据交换
+//     *
+//     * @param fromPosition
+//     * @param toPosition
+//     */
 //    void onItemMove(int fromPosition, int toPosition);
 
     /**
