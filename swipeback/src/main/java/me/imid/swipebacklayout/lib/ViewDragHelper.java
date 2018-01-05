@@ -1426,11 +1426,7 @@ public class ViewDragHelper {
      * otherwise
      */
     public boolean isViewUnder(View view, int x, int y) {
-        if (view == null) {
-            return false;
-        }
-        return x >= view.getLeft() && x < view.getRight() && y >= view.getTop()
-                && y < view.getBottom();
+        return view != null && x >= view.getLeft() && x < view.getRight() && y >= view.getTop() && y < view.getBottom();
     }
 
     /**

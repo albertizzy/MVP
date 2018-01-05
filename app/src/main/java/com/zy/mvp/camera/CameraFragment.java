@@ -359,8 +359,8 @@ public class CameraFragment extends Fragment implements CameraContract.View {
 
             private MyViewHolder(View view) {
                 super(view);
-                mItemId = view.findViewById(R.id.itemid);
-                mItemName = view.findViewById(R.id.itemname);
+                mItemId = view.findViewById(R.id.item_id);
+                mItemName = view.findViewById(R.id.item_name);
             }
 
             @Override
