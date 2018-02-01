@@ -3,6 +3,8 @@ package com.zy.mvp.main;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity
     private GalleryFragment galleryFragment;
     private ShareFragment shareFragment;
     private SendFragment sendFragment;
+    private Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +138,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
@@ -152,7 +154,7 @@ public class MainActivity extends AppCompatActivity
         if (tabFragment == null) {
             tabFragment = TabFragment.newInstance();
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, tabFragment).commit();
+        hideAndShowFragment(tabFragment);
         toolbar.setTitle("Camera");
     }
 
@@ -161,7 +163,7 @@ public class MainActivity extends AppCompatActivity
         if (galleryFragment == null) {
             galleryFragment = GalleryFragment.newInstance("", true);
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, galleryFragment).commit();
+        hideAndShowFragment(galleryFragment);
         toolbar.setTitle("Gallery");
     }
 
@@ -170,7 +172,7 @@ public class MainActivity extends AppCompatActivity
         if (shareFragment == null) {
             shareFragment = ShareFragment.newInstance("", true);
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, shareFragment).commit();
+        hideAndShowFragment(shareFragment);
         toolbar.setTitle("Share");
     }
 
@@ -179,7 +181,20 @@ public class MainActivity extends AppCompatActivity
         if (sendFragment == null) {
             sendFragment = SendFragment.newInstance("", true);
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, sendFragment).commit();
+        hideAndShowFragment(sendFragment);
         toolbar.setTitle("Send");
+    }
+
+    private void hideAndShowFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (currentFragment != null) {
+            fragmentManager.beginTransaction().hide(currentFragment).commit();
+        }
+        if (fragment.isAdded()) {
+            fragmentManager.beginTransaction().show(fragment).commit();
+        } else {
+            fragmentManager.beginTransaction().add(R.id.content_main, fragment).commit();
+        }
+        currentFragment = fragment;
     }
 }

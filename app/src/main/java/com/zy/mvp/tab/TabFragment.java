@@ -115,10 +115,6 @@ public class TabFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         Log.d(TAG, "onDestroyView");
-        fragment1 = null;
-        fragment2 = null;
-        fragment3 = null;
-        fragment4 = null;
         //与onCreateView相对应，当该Fragment的视图被移除时调用
     }
 
