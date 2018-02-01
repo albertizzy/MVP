@@ -186,6 +186,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void hideAndShowFragment(Fragment fragment) {
+//        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (currentFragment != null) {
             fragmentManager.beginTransaction().hide(currentFragment).commit();
