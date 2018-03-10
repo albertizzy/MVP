@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -26,10 +27,6 @@ public class MainActivity extends AppCompatActivity
     private MainContract.Presenter mMainPresenter;
     private Toolbar toolbar;
     private DrawerLayout drawer;
-    private TabFragment tabFragment;
-    private GalleryFragment galleryFragment;
-    private ShareFragment shareFragment;
-    private SendFragment sendFragment;
     private Fragment currentFragment;
 
     @Override
@@ -151,51 +148,60 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void switch2Camera() {
 //        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, CameraFragment.newInstance("", true)).commit();
-        if (tabFragment == null) {
-            tabFragment = TabFragment.newInstance();
+        String tag = TabFragment.class.getSimpleName();
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = TabFragment.newInstance();
         }
-        hideAndShowFragment(tabFragment);
+        hideAndShowFragment(fragment, tag);
         toolbar.setTitle("Camera");
     }
 
     @Override
     public void switch2Gallery() {
-        if (galleryFragment == null) {
-            galleryFragment = GalleryFragment.newInstance("", true);
+        String tag = GalleryFragment.class.getSimpleName();
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = GalleryFragment.newInstance("", true);
         }
-        hideAndShowFragment(galleryFragment);
+        hideAndShowFragment(fragment, tag);
         toolbar.setTitle("Gallery");
     }
 
     @Override
     public void switch2Share() {
-        if (shareFragment == null) {
-            shareFragment = ShareFragment.newInstance("", true);
+        String tag = ShareFragment.class.getSimpleName();
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = ShareFragment.newInstance("", true);
         }
-        hideAndShowFragment(shareFragment);
+        hideAndShowFragment(fragment, tag);
         toolbar.setTitle("Share");
     }
 
     @Override
     public void switch2Send() {
-        if (sendFragment == null) {
-            sendFragment = SendFragment.newInstance("", true);
+        String tag = SendFragment.class.getSimpleName();
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = SendFragment.newInstance("", true);
         }
-        hideAndShowFragment(sendFragment);
+        hideAndShowFragment(fragment, tag);
         toolbar.setTitle("Send");
     }
 
-    private void hideAndShowFragment(Fragment fragment) {
-//        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+    private void hideAndShowFragment(Fragment fragment, String tag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (currentFragment != null) {
-            fragmentManager.beginTransaction().hide(currentFragment).commit();
+            fragmentTransaction.hide(currentFragment);
         }
         if (fragment.isAdded()) {
-            fragmentManager.beginTransaction().show(fragment).commit();
+            fragmentTransaction.show(fragment);
         } else {
-            fragmentManager.beginTransaction().add(R.id.content_main, fragment).commit();
+            fragmentTransaction.add(R.id.content_main, fragment, tag);
         }
+        fragmentTransaction.commit();
         currentFragment = fragment;
     }
 }
