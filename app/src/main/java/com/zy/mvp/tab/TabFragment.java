@@ -22,10 +22,6 @@ import java.util.List;
 
 public class TabFragment extends Fragment {
     private static final String TAG = "TabFragment";
-    private CameraFragment fragment1;
-    private CameraFragment fragment2;
-    private CameraFragment fragment3;
-    private CameraFragment fragment4;
 
     public static TabFragment newInstance() {
         TabFragment fragment = new TabFragment();
@@ -59,18 +55,10 @@ public class TabFragment extends Fragment {
         mViewPager.setOffscreenPageLimit(3);
         //Fragment中嵌套使用Fragment一定要使用getChildFragmentManager(),否则会有问题
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getChildFragmentManager());
-        if (fragment1 == null) {
-            fragment1 = CameraFragment.newInstance("", true);
-        }
-        if (fragment2 == null) {
-            fragment2 = CameraFragment.newInstance("", true);
-        }
-        if (fragment3 == null) {
-            fragment3 = CameraFragment.newInstance("", true);
-        }
-        if (fragment4 == null) {
-            fragment4 = CameraFragment.newInstance("", true);
-        }
+        CameraFragment fragment1 = CameraFragment.newInstance("", true);
+        CameraFragment fragment2 = CameraFragment.newInstance("", true);
+        CameraFragment fragment3 = CameraFragment.newInstance("", true);
+        CameraFragment fragment4 = CameraFragment.newInstance("", true);
         adapter.addFragment(fragment1, "一");
         adapter.addFragment(fragment2, "二");
         adapter.addFragment(fragment3, "三");
