@@ -55,14 +55,10 @@ public class TabFragment extends Fragment {
         mViewPager.setOffscreenPageLimit(3);
         //Fragment中嵌套使用Fragment一定要使用getChildFragmentManager(),否则会有问题
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getChildFragmentManager());
-        CameraFragment fragment1 = CameraFragment.newInstance("", true);
-        CameraFragment fragment2 = CameraFragment.newInstance("", true);
-        CameraFragment fragment3 = CameraFragment.newInstance("", true);
-        CameraFragment fragment4 = CameraFragment.newInstance("", true);
-        adapter.addFragment(fragment1, "一");
-        adapter.addFragment(fragment2, "二");
-        adapter.addFragment(fragment3, "三");
-        adapter.addFragment(fragment4, "四");
+        adapter.addFragment(CameraFragment.newInstance("", true), "一");
+        adapter.addFragment(CameraFragment.newInstance("", true), "二");
+        adapter.addFragment(CameraFragment.newInstance("", true), "三");
+        adapter.addFragment(CameraFragment.newInstance("", true), "四");
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
         return view;
