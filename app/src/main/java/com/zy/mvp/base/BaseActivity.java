@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 public class BaseActivity extends AppCompatActivity {
-    private final String TAG = this.getClass().getSimpleName();
+    protected final String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
