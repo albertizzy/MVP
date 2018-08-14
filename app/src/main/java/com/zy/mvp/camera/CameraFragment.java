@@ -4,13 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zy.mvp.R;
+import com.zy.mvp.base.BaseFragment;
 import com.zy.mvp.detail.DetailActivity;
 import com.zy.mvp.divider.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CameraFragment extends Fragment implements CameraContract.View {
-    private static final String TAG = "CameraFragment";
+public class CameraFragment extends BaseFragment implements CameraContract.View {
     private static final String TOKEN = "token";
     private static final String IS_SHOW_FOOTER = "isShowFooter";
     private String token;
@@ -47,16 +44,8 @@ public class CameraFragment extends Fragment implements CameraContract.View {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Log.d(TAG, "onAttach");
-        //当Fragment与Activity发生关联时调用
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
         boolean isShowFooter = false;
         if (getArguments() != null) {
             token = getArguments().getString(TOKEN);
@@ -71,7 +60,6 @@ public class CameraFragment extends Fragment implements CameraContract.View {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_camera, container, false);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe);
         mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
@@ -98,55 +86,9 @@ public class CameraFragment extends Fragment implements CameraContract.View {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "onActivityCreated");
-        //当Activity的onCreate方法返回时调用
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause");
         mListPresenter.unSubscribe();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d(TAG, "onDestroyView");
-        //与onCreateView相对应，当该Fragment的视图被移除时调用
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.d(TAG, "onDetach");
-        //与onAttach相对应，当Fragment与Activity关联被取消时调用
     }
 
     @Override

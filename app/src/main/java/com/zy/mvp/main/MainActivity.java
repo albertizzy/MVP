@@ -9,21 +9,19 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.zy.mvp.R;
+import com.zy.mvp.base.BaseActivity;
 import com.zy.mvp.gallery.GalleryFragment;
 import com.zy.mvp.send.SendFragment;
 import com.zy.mvp.share.ShareFragment;
 import com.zy.mvp.tab.TabFragment;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, MainContract.View {
-    private static final String TAG = "MainActivity";
     private MainContract.Presenter mMainPresenter;
     private Toolbar toolbar;
     private DrawerLayout drawer;
@@ -32,7 +30,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
         //创建Activity
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
@@ -62,41 +59,6 @@ public class MainActivity extends AppCompatActivity
         } else {//屏幕旋转
             toolbar.setTitle(savedInstanceState.getString("title"));
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart");
-        //Activity快要变成可见的
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-        //Activity变成可见的，处于运行状态
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause");
-        //其他Activity获得用户焦点，（Activity快要暂停了）
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop");
-        //Activity不再可见，处于停止状态
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
-        //Activity快要被销毁了
     }
 
     @Override
